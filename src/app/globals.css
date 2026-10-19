@@ -1307,3 +1307,440 @@ button {
   background: var(--accent);
   box-shadow: 0 0 0 5px color-mix(in oklab, var(--accent) 25%, transparent), 0 0 20px var(--accent);
 }
+.tl b {
+  font-family: var(--font-display), sans-serif;
+  font-size: clamp(1.1rem, min(1.8vw, 3.2vh), 2rem);
+  color: var(--accent);
+}
+.tl p {
+  margin: 0;
+  font-size: var(--fs-body);
+  color: var(--muted);
+  line-height: 1.45;
+}
+
+/* ================= 21 Монгол соёл ================= */
+
+.feature {
+  display: flex;
+  flex-direction: column;
+  gap: 1vh;
+}
+.feature-k {
+  font-family: var(--font-display), sans-serif;
+  font-weight: 800;
+  font-size: clamp(1.8rem, min(3.4vw, 6vh), 3.8rem);
+  letter-spacing: 0.04em;
+  background: linear-gradient(120deg, #fff, var(--accent));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.feature p {
+  margin: 0;
+  font-size: var(--fs-lead);
+  color: var(--muted);
+  line-height: 1.5;
+}
+.feature b {
+  color: var(--accent);
+}
+.sub-k {
+  font-family: var(--font-mono), monospace;
+  font-size: var(--fs-small);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.heritage {
+  display: flex;
+  flex-wrap: wrap;
+  gap: clamp(8px, 0.8vw, 12px);
+}
+.her {
+  padding: 1vh 1.1vw !important;
+  border-radius: 999px !important;
+  font-size: var(--fs-body);
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6em;
+}
+.her > span {
+  font-family: var(--font-mono), monospace;
+  font-size: var(--fs-small);
+  color: var(--accent);
+}
+.her::before {
+  border-radius: 999px;
+}
+
+/* ================= 23 Хүний хөгжил ================= */
+
+.tiers {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(8px, 1vw, 14px);
+}
+.tier {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4vh;
+}
+.tier b {
+  font-family: var(--font-display), sans-serif;
+  font-weight: 500;
+  font-size: var(--fs-body);
+}
+.tier > span {
+  font-size: var(--fs-small);
+  color: var(--accent);
+}
+.tier-bar {
+  position: absolute !important;
+  left: 0;
+  bottom: 0;
+  height: 3px;
+  width: var(--w);
+  border-radius: 3px;
+  background: linear-gradient(90deg, var(--accent), transparent);
+  transform: none !important;
+}
+
+/* ================= 25 Дүгнэлт ================= */
+
+.layout-final {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 3vh;
+}
+.final-title {
+  margin: 0;
+  font-family: var(--font-display), sans-serif;
+  font-weight: 800;
+  font-size: clamp(2.2rem, min(6.6vw, 11.5vh), 8rem);
+  line-height: 1.04;
+  letter-spacing: -0.035em;
+  text-wrap: balance;
+  filter: drop-shadow(0 0 40px color-mix(in oklab, var(--accent) 35%, transparent));
+}
+.final-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: clamp(8px, 1vw, 16px);
+}
+.final-chip {
+  display: inline-flex !important;
+  align-items: center;
+  gap: 0.7em;
+  border-radius: 999px !important;
+  padding: 1.3vh 1.5vw !important;
+  font-size: var(--fs-body);
+  font-weight: 500;
+}
+.final-chip svg {
+  color: var(--accent);
+}
+.final-chip::before {
+  border-radius: 999px;
+}
+.final-key {
+  font-size: var(--fs-lead);
+  color: var(--muted);
+}
+.final-key b {
+  color: var(--fg);
+}
+.thanks {
+  margin-top: 2vh;
+  font-family: var(--font-display), sans-serif;
+  font-weight: 600;
+  font-size: clamp(1.1rem, min(2.2vw, 4vh), 2.4rem);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  background: linear-gradient(90deg, #fff, var(--accent), #a78bfa, #fff);
+  background-size: 300% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: slide-bg 5s linear infinite;
+}
+
+/* ================= HUD ================= */
+
+.hud-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  z-index: 20;
+  background: rgba(255, 255, 255, 0.05);
+}
+.hud-progress-bar {
+  height: 100%;
+  transform-origin: left;
+  transform: scaleX(0);
+  background: linear-gradient(90deg, #7c5cff, var(--accent));
+  box-shadow: 0 0 16px var(--accent);
+}
+
+.hud-count {
+  position: fixed;
+  left: var(--pad-x);
+  bottom: 3.4vh;
+  z-index: 20;
+  display: flex;
+  align-items: baseline;
+  gap: 0.5em;
+  font-family: var(--font-mono), monospace;
+  font-size: var(--fs-small);
+  color: var(--faint);
+  pointer-events: none;
+}
+.hud-count-cur {
+  display: inline-block;
+  font-family: var(--font-display), sans-serif;
+  font-weight: 700;
+  font-size: 1.9em;
+  color: var(--fg);
+  animation: count-in 0.7s var(--ease);
+}
+@keyframes count-in {
+  from { transform: translateY(70%); opacity: 0; filter: blur(4px); }
+}
+.hud-count-sep {
+  color: var(--accent);
+}
+.hud-count-nav {
+  margin-left: 1.2em;
+  padding-left: 1.2em;
+  border-left: 1px solid var(--line);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.hud-dots {
+  position: fixed;
+  right: 1.8vw;
+  top: 50%;
+  translate: 0 -50%;
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
+}
+.hud-dot {
+  position: relative;
+  width: 22px;
+  height: min(14px, 2.6vh);
+  display: grid;
+  place-items: center end;
+}
+.hud-dot::before {
+  content: "";
+  width: 6px;
+  height: 2px;
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.3);
+  transition: width 0.5s var(--ease), background 0.3s ease, box-shadow 0.3s ease;
+}
+.hud-dot:hover::before {
+  width: 16px;
+  background: #fff;
+}
+.hud-dot.is-on::before {
+  width: 22px;
+  background: var(--accent);
+  box-shadow: 0 0 10px var(--accent);
+}
+.hud-dot-label {
+  position: absolute;
+  right: 32px;
+  top: 50%;
+  translate: 10px -50%;
+  white-space: nowrap;
+  font-family: var(--font-mono), monospace;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  padding: 5px 10px;
+  border-radius: 8px;
+  background: rgba(8, 12, 24, 0.85);
+  border: 1px solid var(--line);
+  backdrop-filter: blur(8px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease, translate 0.5s var(--ease);
+}
+.hud-dot:hover .hud-dot-label {
+  opacity: 1;
+  translate: 0 -50%;
+}
+
+.hud-tools {
+  position: fixed;
+  right: var(--pad-x);
+  bottom: 3vh;
+  z-index: 20;
+  display: flex;
+  gap: 8px;
+}
+.hud-btn {
+  height: 38px;
+  min-width: 38px;
+  padding: 0 12px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(10px);
+  font-family: var(--font-mono), monospace;
+  font-size: 13px;
+  color: var(--muted);
+  transition: all 0.4s var(--ease);
+}
+.hud-btn:hover:not(:disabled) {
+  color: #050810;
+  background: var(--accent);
+  border-color: var(--accent);
+  scale: 1.12;
+  box-shadow: 0 0 24px var(--accent);
+}
+.hud-btn:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+
+/* ================= Курсор ================= */
+
+.cursor-dot,
+.cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  pointer-events: none;
+  border-radius: 50%;
+}
+.cursor-dot {
+  width: 6px;
+  height: 6px;
+  margin: -3px 0 0 -3px;
+  background: #fff;
+  mix-blend-mode: difference;
+}
+.cursor-ring {
+  width: 38px;
+  height: 38px;
+  margin: -19px 0 0 -19px;
+}
+.cursor-ring::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 1px solid color-mix(in oklab, var(--accent) 70%, transparent);
+  transition: transform 0.5s var(--ease), background 0.4s ease, border-color 0.4s ease;
+}
+.cursor-ring.is-hover::before {
+  transform: scale(1.8);
+  background: color-mix(in oklab, var(--accent) 14%, transparent);
+  border-color: var(--accent);
+}
+@media (hover: hover) and (pointer: fine) {
+  html,
+  button,
+  a {
+    cursor: none;
+  }
+}
+@media (hover: none) {
+  .cursor-dot,
+  .cursor-ring {
+    display: none;
+  }
+}
+
+/* ================= Эхлэлийн хөшиг ================= */
+
+.curtain {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: grid;
+  place-items: center;
+  background: var(--bg);
+  pointer-events: none;
+  animation: curtain 1.5s var(--ease-io) 0.9s forwards;
+}
+.curtain span {
+  font-family: var(--font-display), sans-serif;
+  font-weight: 700;
+  font-size: clamp(1rem, 2vw, 1.6rem);
+  letter-spacing: 0.6em;
+  color: var(--fg);
+  animation: curtain-text 1.4s var(--ease) both;
+}
+@keyframes curtain-text {
+  from { letter-spacing: 1.4em; opacity: 0; filter: blur(8px); }
+}
+@keyframes curtain {
+  to { clip-path: inset(0 0 100% 0); visibility: hidden; }
+}
+
+/* ================= Жижиг дэлгэц ================= */
+
+@media (max-width: 900px), (max-aspect-ratio: 1/1) {
+  :root {
+    --pad-y: 9vh;
+    --pad-x: 6vw;
+    --fs-h2: clamp(1.4rem, 6.4vw, 2.4rem);
+    --fs-lead: clamp(0.9rem, 3.8vw, 1.1rem);
+    --fs-body: clamp(0.8rem, 3.4vw, 1rem);
+    --fs-small: clamp(0.65rem, 2.8vw, 0.8rem);
+  }
+  .layout-left,
+  .layout-right {
+    width: 100%;
+    gap: 1.6vh;
+  }
+  .layout-split {
+    grid-template-columns: 1fr;
+    gap: 2vh;
+    align-content: center;
+  }
+  .grid-3,
+  .eras,
+  .pillars,
+  .timeline,
+  .timeline-mini {
+    grid-template-columns: 1fr 1fr;
+  }
+  .supply {
+    height: 34vh;
+  }
+  .supply-node {
+    max-width: 30vw;
+  }
+  .hud-dots,
+  .agenda-s {
+    display: none;
+  }
+  .hud-count-nav {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
