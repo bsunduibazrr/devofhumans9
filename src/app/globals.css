@@ -871,3 +871,439 @@ button {
   overflow: hidden;
   pointer-events: none;
   mask-image: linear-gradient(90deg, transparent, #000 15%, #000 85%, transparent);
+}
+.marquee-track {
+  display: inline-flex;
+  white-space: nowrap;
+  font-family: var(--font-display), sans-serif;
+  font-weight: 700;
+  font-size: clamp(1.4rem, min(3.4vw, 6vh), 3.6rem);
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.28);
+  animation: marquee 38s linear infinite;
+}
+@keyframes marquee {
+  to { transform: translateX(-50%); }
+}
+
+/* ================= 02 Агуулга ================= */
+
+.agenda {
+  list-style: none;
+  margin: 0.5vh 0 0;
+  padding: 0;
+}
+.agenda-row {
+  position: relative;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 3.2em 1fr auto 1.4em;
+  align-items: center;
+  gap: 1em;
+  padding: 1.35vh 0.6em;
+  text-align: left;
+  border-bottom: 1px solid var(--line);
+  overflow: hidden;
+  transition: padding 0.5s var(--ease), color 0.3s ease;
+}
+.agenda-row::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(90deg, color-mix(in oklab, var(--accent) 22%, transparent), transparent 80%);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.6s var(--ease);
+}
+.agenda-row:hover {
+  padding-left: 1.6em;
+}
+.agenda-row:hover::before {
+  transform: scaleX(1);
+}
+.agenda-n {
+  font-family: var(--font-mono), monospace;
+  font-size: var(--fs-small);
+  color: var(--accent);
+}
+.agenda-t {
+  font-family: var(--font-display), sans-serif;
+  font-weight: 500;
+  font-size: clamp(0.95rem, min(1.45vw, 2.6vh), 1.55rem);
+  letter-spacing: -0.01em;
+}
+.agenda-s {
+  font-size: var(--fs-small);
+  color: var(--faint);
+  white-space: nowrap;
+}
+.agenda-arrow {
+  color: var(--accent);
+  opacity: 0;
+  transform: translateX(-12px);
+  transition: all 0.5s var(--ease);
+}
+.agenda-row:hover .agenda-arrow {
+  opacity: 1;
+  transform: none;
+}
+
+/* ================= 03 Тодорхойлолт ================= */
+
+.quote {
+  position: relative;
+  margin: 0;
+  padding: 2.6vh 2vw 2.6vh 2.4vw;
+  font-size: clamp(1.05rem, min(1.6vw, 2.9vh), 1.75rem);
+  line-height: 1.5;
+  font-weight: 400;
+  border-left: 2px solid var(--accent);
+  background: linear-gradient(90deg, color-mix(in oklab, var(--accent) 10%, transparent), transparent);
+  border-radius: 0 var(--radius) var(--radius) 0;
+}
+.quote b {
+  color: var(--accent);
+  font-weight: 600;
+}
+.quote cite {
+  display: block;
+  margin-top: 1.4vh;
+  font-style: normal;
+  font-family: var(--font-mono), monospace;
+  font-size: var(--fs-small);
+  color: var(--faint);
+  letter-spacing: 0.06em;
+}
+.quote-mark {
+  position: absolute;
+  top: 0.05em;
+  right: 0.3em;
+  font-family: var(--font-display), sans-serif;
+  font-size: 3.6em;
+  line-height: 1;
+  color: color-mix(in oklab, var(--accent) 35%, transparent);
+  animation: bob 5s ease-in-out infinite;
+}
+.quote-sm {
+  font-size: clamp(1rem, min(1.4vw, 2.6vh), 1.5rem);
+}
+.chips {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(8px, 0.9vw, 14px);
+}
+.chip {
+  display: flex;
+  align-items: center;
+  gap: 0.8em;
+  font-size: var(--fs-body);
+  font-weight: 500;
+}
+.chip svg {
+  color: var(--accent);
+  flex: none;
+}
+
+/* ================= 04 Фридман ================= */
+
+.eras {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(10px, 1.2vw, 20px);
+}
+.era {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8vh;
+  height: 100%;
+}
+.era-v {
+  font-family: var(--font-display), sans-serif;
+  font-weight: 800;
+  font-size: clamp(1.8rem, min(3.6vw, 6.4vh), 4.4rem);
+  line-height: 1;
+  background: linear-gradient(120deg, #fff, var(--accent));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.era-v span {
+  display: block;
+  font-size: 0.26em;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 0.5em;
+  -webkit-text-fill-color: var(--muted);
+}
+.era-y {
+  font-family: var(--font-mono), monospace;
+  font-size: var(--fs-small);
+  color: var(--accent);
+}
+.era-who {
+  font-family: var(--font-display), sans-serif;
+  font-size: calc(var(--fs-body) * 1.1);
+  font-weight: 500;
+}
+.era-t {
+  margin: 0;
+  font-size: calc(var(--fs-body) * 0.95);
+  color: var(--muted);
+  line-height: 1.45;
+  flex: 1;
+}
+.era-bar {
+  height: 4px;
+  width: var(--w);
+  border-radius: 4px;
+  background: linear-gradient(90deg, var(--accent), transparent);
+  margin-top: 0.6vh;
+}
+
+/* ================= 06 Тулгуур ================= */
+
+.pillars {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(10px, 1.2vw, 20px);
+  width: min(100%, 1180px);
+  margin-top: 1vh;
+}
+.pillar {
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6vh;
+  height: 100%;
+}
+.pillar-ic {
+  width: clamp(40px, min(3.6vw, 6.4vh), 64px);
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+  border-radius: 30%;
+  color: var(--accent);
+  background: color-mix(in oklab, var(--accent) 14%, transparent);
+  border: 1px solid color-mix(in oklab, var(--accent) 40%, transparent);
+  box-shadow: 0 0 30px color-mix(in oklab, var(--accent) 30%, transparent);
+  margin-bottom: 0.8vh;
+  transition: transform 0.7s var(--ease);
+}
+.pillar:hover .pillar-ic {
+  transform: translateZ(50px) rotate(-8deg) scale(1.1) !important;
+}
+.pillar-n {
+  position: absolute !important;
+  top: clamp(14px, min(1.6vw, 2.8vh), 28px);
+  right: clamp(14px, min(1.6vw, 2.8vh), 28px);
+  font-family: var(--font-mono), monospace;
+  font-size: var(--fs-small);
+  color: var(--faint);
+}
+.pillar h3 {
+  margin: 0;
+  font-family: var(--font-display), sans-serif;
+  font-weight: 600;
+  font-size: clamp(1rem, min(1.5vw, 2.7vh), 1.6rem);
+}
+.pillar p {
+  margin: 0;
+  font-size: var(--fs-body);
+  color: var(--muted);
+}
+
+/* ================= Харьцуулалт ================= */
+
+.compare {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: clamp(10px, 1.2vw, 20px);
+}
+.cmp {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5vh;
+}
+.cmp > span {
+  font-family: var(--font-mono), monospace;
+  font-size: var(--fs-small);
+  color: var(--faint);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+.cmp b {
+  font-family: var(--font-display), sans-serif;
+  font-size: clamp(2rem, min(4.2vw, 7.4vh), 5rem);
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+}
+.cmp em {
+  font-style: normal;
+  font-size: var(--fs-body);
+  color: var(--muted);
+}
+.cmp-old b {
+  color: rgba(255, 255, 255, 0.55);
+}
+.cmp-new b {
+  background: linear-gradient(120deg, #fff, var(--accent));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.cmp-arrow {
+  font-size: clamp(1.5rem, 3vw, 3rem);
+  color: var(--accent);
+  animation: nudge 1.6s var(--ease-io) infinite;
+}
+@keyframes nudge {
+  50% { translate: 8px 0; }
+}
+
+.timeline-mini {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(8px, 1vw, 16px);
+}
+.tm {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6vh;
+  height: 100%;
+}
+.tm b {
+  font-family: var(--font-display), sans-serif;
+  font-size: clamp(1.2rem, min(2vw, 3.6vh), 2.2rem);
+  color: var(--accent);
+}
+.tm > span {
+  font-size: calc(var(--fs-body) * 0.95);
+  color: var(--muted);
+  line-height: 1.4;
+}
+
+/* ================= 12 Нийлүүлэлтийн сүлжээ ================= */
+
+.supply {
+  position: relative;
+  height: min(60vh, 44vw);
+  width: 100%;
+}
+.supply-lines {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+.supply-lines line {
+  stroke: var(--accent);
+  stroke-width: 1.5;
+  vector-effect: non-scaling-stroke;
+  stroke-dasharray: 2 3;
+  opacity: 0.65;
+  animation: flow 1.6s linear infinite;
+  animation-delay: calc(var(--i) * -0.3s);
+}
+@keyframes flow {
+  to { stroke-dashoffset: -10; }
+}
+.supply-core {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  translate: -50% -50%;
+  width: clamp(80px, min(8vw, 14vh), 150px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  color: #fff;
+  background: radial-gradient(circle, color-mix(in oklab, var(--accent) 45%, transparent), rgba(5, 8, 16, 0.85) 70%);
+  border: 1px solid color-mix(in oklab, var(--accent) 60%, transparent);
+  box-shadow: 0 0 60px color-mix(in oklab, var(--accent) 50%, transparent);
+}
+.supply-core::before,
+.supply-core::after {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: 50%;
+  border: 1px solid var(--accent);
+  animation: ping 2.6s var(--ease) infinite;
+}
+.supply-core::after {
+  animation-delay: 1.3s;
+}
+.supply-node {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0.3vh;
+  padding: 1.1vh 1.1vw;
+  border-radius: 14px;
+  background: rgba(10, 14, 28, 0.72);
+  border: 1px solid color-mix(in oklab, var(--accent) 35%, transparent);
+  backdrop-filter: blur(10px);
+  max-width: 13vw;
+  animation: float 6s ease-in-out infinite;
+  animation-delay: calc(var(--i) * -1s);
+  transition: scale 0.5s var(--ease), box-shadow 0.4s ease, background 0.4s ease;
+}
+.supply-node:hover {
+  scale: 1.15;
+  z-index: 2;
+  background: color-mix(in oklab, var(--accent) 22%, rgba(10, 14, 28, 0.9));
+  box-shadow: 0 0 40px color-mix(in oklab, var(--accent) 50%, transparent);
+}
+.supply-node b {
+  font-family: var(--font-display), sans-serif;
+  font-weight: 600;
+  font-size: var(--fs-body);
+  color: var(--accent);
+}
+.supply-node > span {
+  font-size: var(--fs-small);
+  color: var(--muted);
+}
+
+/* ================= 19 Он дараалал ================= */
+
+.timeline {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: clamp(10px, 1.2vw, 20px);
+  padding-top: 2.4vh;
+}
+.timeline-line {
+  position: absolute !important;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+}
+.tl {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6vh;
+  height: 100%;
+}
+.tl-dot {
+  position: absolute !important;
+  top: calc(-2.4vh - 7px);
+  left: 50%;
+  width: 12px;
+  height: 12px;
+  margin-left: -6px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 0 5px color-mix(in oklab, var(--accent) 25%, transparent), 0 0 20px var(--accent);
+}
