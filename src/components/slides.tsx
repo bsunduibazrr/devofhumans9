@@ -463,3 +463,235 @@ function S11() {
       </div>
       <Points
         start={8}
+        items={["2007 онд ДХБ-д элссэн", "Samsung-ийн гар утасны тал орчим нь Вьетнамд үйлдвэрлэгддэг"]}
+      />
+    </div>
+  );
+}
+
+function S12() {
+  const nodes = [
+    { t: "Дизайн", c: "АНУ", x: 20, y: 10 },
+    { t: "Чип", c: "Тайвань", x: 80, y: 10 },
+    { t: "Дэлгэц", c: "Өмнөд Солонгос", x: 88, y: 50 },
+    { t: "Камер", c: "Япон", x: 78, y: 90 },
+    { t: "Угсралт", c: "Хятад · Энэтхэг · Вьетнам", x: 24, y: 90 },
+    { t: "Ашигт малтмал", c: "Африк · Өмнөд Америк", x: 11, y: 50 },
+  ];
+  return (
+    <div className="layout-split">
+      <div>
+        <Eyebrow n="04" label="Эдийн засаг" />
+        <Title>Нэг утас — олон орны хөдөлмөр</Title>
+        <Lead>Дэлхийн нийлүүлэлтийн сүлжээ бүтээгдэхүүнийг хямд, чанартай болгож, сонголтыг олшруулсан.</Lead>
+        <Points
+          start={5}
+          items={["Хэрэглэгчид — хямд үнэ, олон сонголт", "Хөгжиж буй орнуудад — сая сая ажлын байр"]}
+        />
+      </div>
+      <div className="supply rv" style={{ "--i": 4 } as Vars}>
+        <svg className="supply-lines" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden>
+          {nodes.map((n, k) => (
+            <line key={k} x1="50" y1="50" x2={n.x} y2={n.y} style={{ "--i": k } as Vars} />
+          ))}
+        </svg>
+        <div className="supply-core">
+          <Icon name="phone" size={44} />
+        </div>
+        {nodes.map((n, k) => (
+          <div
+            key={n.t}
+            className="supply-node"
+            style={{ left: `${n.x}%`, top: `${n.y}%`, "--i": k } as Vars}
+            data-cursor
+          >
+            <b>{n.t}</b>
+            <span>{n.c}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function S13() {
+  return (
+    <div className="layout-left">
+      <Eyebrow n="05" label="Технологи ба мэдлэг" />
+      <Title>Мэдээлэл гэрлийн хурдаар</Title>
+      <div className="mega">
+        <Reveal i={3} className="mega-v">
+          <Counter to={5.5} decimals={1} duration={2000} />
+          <small>тэрбум</small>
+        </Reveal>
+        <Reveal i={4} className="mega-l">
+          хүн интернет хэрэглэж байна — дэлхийн хүн амын 68% (2024)
+        </Reveal>
+      </div>
+      <div className="grid-3">
+        {[
+          ["book", "Мэдлэг", "Дэлхийн номын сан халаасанд"],
+          ["wallet", "Бизнес", "Жижиг бизнес ч дэлхийд худалдаална"],
+          ["users", "Харилцаа", "Тив дамнан хоромхон зуур"],
+        ].map(([ic, t, s], k) => (
+          <Tilt i={5 + k} key={t} className="card card-sm">
+            <Icon name={ic} />
+            <h3>{t}</h3>
+            <p>{s}</p>
+          </Tilt>
+        ))}
+      </div>
+      <Source i={8}>Олон улсын цахилгаан холбооны байгууллага (ITU)</Source>
+    </div>
+  );
+}
+
+function S14() {
+  return (
+    <div className="layout-right">
+      <CaseTag n="04" place="Кени" />
+      <Title>M-Pesa: утсаар ядуурлыг ялсан нь</Title>
+      <Lead>
+        2007 онд Британийн Vodafone, Кенийн Safaricom хамтран гар утсаар мөнгө шилжүүлэх үйлчилгээг
+        нэвтрүүлсэн — банкгүй сая сая хүнд санхүүгийн хүртээмж.
+      </Lead>
+      <div className="stats">
+        <Stat
+          i={5}
+          value={<Counter to={194000} />}
+          label="өрх буюу Кений нийт өрхийн 2% нэн ядуурлаас гарсан"
+        />
+        <Stat i={6} value={<Counter to={50} suffix=" сая+" />} label="хэрэглэгч Африкийн олон оронд" />
+      </div>
+      <Points start={7} items={["Эмэгтэй тэргүүлэгчтэй өрхөд хамгийн их үр өгөөжтэй"]} />
+      <Source i={8}>Suri & Jack, Science сэтгүүл, 2016</Source>
+    </div>
+  );
+}
+
+function S15() {
+  return (
+    <div className="layout-left">
+      <CaseTag n="05" place="Энэтхэг · Бангалор" />
+      <Title>Дэлхийн «оффис» болсон Энэтхэг</Title>
+      <Lead>
+        Дэлхийн компаниуд програм хангамж, үйлчилгээгээ Энэтхэгт хийлгэснээр шинэ дунд анги бий болсон.
+      </Lead>
+      <div className="stats">
+        <Stat i={5} value={<Counter to={5} suffix=" сая+" />} label="IT салбарын ажилтан" />
+        <Stat
+          i={6}
+          value={
+            <>
+              $<Counter to={200} />
+              <small> тэрбум</small>
+            </>
+          }
+          label="IT үйлчилгээний жилийн экспорт"
+        />
+      </div>
+      <Points start={7} items={["Google, Microsoft-ын гүйцэтгэх захирлууд Энэтхэгт төрж өссөн"]} />
+      <Source i={8}>NASSCOM, 2024</Source>
+    </div>
+  );
+}
+
+function S16() {
+  return (
+    <div className="layout-right">
+      <Eyebrow n="06" label="Боловсрол" />
+      <Title>Мэдлэг хил хязгааргүй</Title>
+      <div className="compare">
+        <Tilt i={4} className="cmp cmp-old">
+          <span>2000 он</span>
+          <b>
+            <Counter to={2.1} decimals={1} />
+          </b>
+          <em>сая гадаад оюутан</em>
+        </Tilt>
+        <div className="cmp-arrow rv" style={{ "--i": 5 } as Vars}>
+          →
+        </div>
+        <Tilt i={6} className="cmp cmp-new">
+          <span>2022 он</span>
+          <b>
+            <Counter to={6.9} decimals={1} delay={600} />
+          </b>
+          <em>сая гадаад оюутан</em>
+        </Tilt>
+      </div>
+      <Points
+        start={7}
+        items={[
+          "Coursera-д 150 сая гаруй хүн онлайнаар суралцаж байна",
+          "Khan Academy, YouTube — дэлхийн шилдэг хичээл үнэ төлбөргүй",
+          "Гадаад хэл, олон соёлын туршлага — ирээдүйн ур чадвар",
+        ]}
+      />
+      <Source i={10}>ЮНЕСКО</Source>
+    </div>
+  );
+}
+
+function S17() {
+  return (
+    <div className="layout-left">
+      <CaseTag n="06" place="Европын Холбоо" />
+      <Title>Erasmus+: хилгүй их сургууль</Title>
+      <Lead>1987 оноос хойш Европын оюутнууд өөр оронд 3–12 сар суралцаж, дадлага хийх боломжтой болсон.</Lead>
+      <div className="stats">
+        <Stat i={5} value={<Counter to={15} suffix=" сая+" />} label="хүн хөтөлбөрт хамрагдсан" />
+        <Stat i={6} value={<Counter to={1} suffix=" сая" />} label="«Erasmus хүүхэд» — хөтөлбөрөөр танилцсан хосуудын хүүхэд (тооцоо)" />
+      </div>
+      <Points start={7} items={["Оролцогчид ажилд орох чадвар, хэлний мэдлэгээрээ давуу"]} />
+      <Source i={8}>Европын Комисс</Source>
+    </div>
+  );
+}
+
+function S18() {
+  return (
+    <div className="layout-right">
+      <Eyebrow n="07" label="Эрүүл мэнд" />
+      <Title>Хүн төрөлхтөн урт удаан насалдаг болов</Title>
+      <Reveal i={4} className="chart-card">
+        <div className="chart-head">
+          <span>Дэлхийн дундаж наслалт (жил)</span>
+          <span className="chart-big">
+            <Counter from={46} to={73} duration={2400} delay={500} />
+          </span>
+        </div>
+        <LineChart
+          id="life"
+          min={40}
+          max={80}
+          points={[
+            [1950, 46],
+            [1970, 56],
+            [1990, 64],
+            [2010, 70],
+            [2023, 73],
+          ]}
+        />
+      </Reveal>
+      <Points
+        start={6}
+        items={[
+          "1980 онд цэцэг өвчнийг дэлхий нийтийн хамтын вакцинжуулалтаар бүрэн устгасан",
+          "Саа өвчний тохиолдол 1988 оноос хойш 99%-иар буурсан",
+        ]}
+      />
+      <Source i={8}>НҮБ, ДЭМБ</Source>
+    </div>
+  );
+}
+
+function S19() {
+  const steps = [
+    { d: "2020.01", t: "Хятадын эрдэмтэд вирусын геномыг дэлхийд нээлттэй нийтэлсэн" },
+    { d: "2020", t: "BioNTech (Герман) + Pfizer (АНУ) хамтран вакцин бүтээв" },
+    { d: "2020.12", t: "Анхны вакцин зөвшөөрөгдсөн — 1 жил хүрэхгүй хугацаанд" },
+    { d: "COVAX", t: "~2 тэрбум тун 140 гаруй оронд хүргэгдсэн" },
+  ];
+  return (
+    <div className="layout-bottom">
