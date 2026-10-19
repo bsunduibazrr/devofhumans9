@@ -695,3 +695,236 @@ function S19() {
   ];
   return (
     <div className="layout-bottom">
+      <CaseTag n="07" place="Дэлхий нийт" />
+      <Title>COVID-19 вакцин: хамтын шинжлэх ухааны хурд</Title>
+      <Lead>Ердийн үед 10 гаруй жил шаардагддаг вакциныг дэлхийн хамтын ажиллагаа 11 сард бүтээв.</Lead>
+      <div className="timeline">
+        <div className="timeline-line rv" style={{ "--i": 4 } as Vars} />
+        {steps.map((s, k) => (
+          <Tilt i={5 + k} key={k} className="tl">
+            <span className="tl-dot" />
+            <b>{s.d}</b>
+            <p>{s.t}</p>
+          </Tilt>
+        ))}
+      </div>
+      <Source i={9}>ДЭМБ, Gavi</Source>
+    </div>
+  );
+}
+
+function S20() {
+  return (
+    <div className="layout-left">
+      <CaseTag n="08" place="Өмнөд Солонгос" />
+      <Title>Халлю: соёл дэлхийг тойрох нь</Title>
+      <Lead>Даяаршил жижиг орны соёлыг ч дэлхийн тайзнаа гаргаж, улс орны нэр хүнд, аялал жуулчлалыг өсгөдөг.</Lead>
+      <div className="grid-3">
+        <Tilt i={5} className="card card-sm">
+          <Icon name="film" />
+          <h3>«Parasite»</h3>
+          <p>2020 онд Оскарын шилдэг кино болсон англи бус хэлтэй анхны бүтээл</p>
+        </Tilt>
+        <Tilt i={6} className="card card-sm">
+          <Icon name="music" />
+          <h3>BTS</h3>
+          <p>Billboard Hot 100-д 1-рт орсон анхны солонгос хамтлаг</p>
+        </Tilt>
+        <Tilt i={7} className="card card-sm">
+          <Icon name="sparkle" />
+          <h3>«Squid Game»</h3>
+          <p>Netflix-ийн түүхэн дэх хамгийн их үзэлттэй цуврал</p>
+        </Tilt>
+      </div>
+    </div>
+  );
+}
+
+function S21() {
+  const heritage = [
+    ["2008", "Морин хуурын урлаг"],
+    ["2008", "Уртын дуу"],
+    ["2010", "Наадам"],
+    ["2010", "Хөөмий"],
+    ["2013", "Монгол гэр урлал"],
+  ];
+  return (
+    <div className="layout-right">
+      <CaseTag n="09" place="Монгол" />
+      <Title>Монгол соёл дэлхийн тайзнаа</Title>
+      <Tilt i={4} className="feature" accent="#ffc86b">
+        <div className="feature-k">The HU</div>
+        <p>
+          Хөөмий, морин хуурыг рок хөгжимтэй хослуулж, «Wolf Totem» дуу нь Billboard-ын Hard Rock
+          борлуулалтын жагсаалтад <b>1-рт</b> орсон (2019).
+        </p>
+      </Tilt>
+      <Reveal i={5} className="sub-k">
+        ЮНЕСКО-гийн биет бус соёлын өвд
+      </Reveal>
+      <div className="heritage">
+        {heritage.map(([y, t], k) => (
+          <Tilt i={6 + k} key={t} className="her" max={16}>
+            <span>{y}</span>
+            {t}
+          </Tilt>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function S22() {
+  return (
+    <div className="layout-left">
+      <Eyebrow n="08" label="Энх тайван" />
+      <Title>Хамтын ажиллагаа — энх тайвны үндэс</Title>
+      <Reveal as="blockquote" i={3} className="quote quote-sm">
+        <span className="quote-mark">“</span>
+        Даяарчлагдсан дэлхий нь дэлхийн хүн амыг нэг жижиг завинд суулгажээ.
+        <cite>— Кофи Аннан, НҮБ-ын ерөнхий нарийн бичгийн дарга асан</cite>
+      </Reveal>
+      <div className="grid-2">
+        <Tilt i={5} className="card card-sm">
+          <Icon name="shield" />
+          <h3>Европын Холбоо</h3>
+          <p>Нүүрс, гангийн хамтын худалдаанаас эхэлж, гишүүд хооронд 70+ жил дайнгүй. 2012 онд Нобелийн энх тайвны шагнал</p>
+        </Tilt>
+        <Tilt i={6} className="card card-sm">
+          <Icon name="leaf" />
+          <h3>Парисын хэлэлцээр</h3>
+          <p>2015 онд 190 гаруй орон уур амьсгалын өөрчлөлтийн эсрэг нэгдсэн</p>
+        </Tilt>
+      </div>
+    </div>
+  );
+}
+
+function S23() {
+  const tiers = [
+    { t: "Сайн боловсрол, өндөр чадвар", s: "Эрэлт өндөр · цалин өндөр", w: 100 },
+    { t: "Сайн боловсрол, тусгай чадвар", s: "Эрэлт өндөр · цалин өндөр", w: 82 },
+  ];
+  return (
+    <div className="layout-split">
+      <div>
+        <Eyebrow n="09" label="Хүний хөгжил" />
+        <Title>Даяаршил = хүний сонголтын эрх чөлөө</Title>
+        <Lead>
+          Орлого өсөхийн хэрээр эрүүл урт наслах, боловсрол эзэмших, амьжиргааны зохистой түвшинд амьдрах
+          боломж нэмэгддэг.
+        </Lead>
+        <div className="tiers">
+          {tiers.map((x, k) => (
+            <Tilt i={5 + k} key={x.t} className="tier" max={8}>
+              <div className="tier-bar" style={{ "--w": `${x.w}%` } as Vars} />
+              <b>{x.t}</b>
+              <span>{x.s} → Даяаршил ашигтай</span>
+            </Tilt>
+          ))}
+        </div>
+      </div>
+      <Reveal i={4} className="chart-card">
+        <div className="chart-head">
+          <span>Дэлхийн хүний хөгжлийн индекс (HDI)</span>
+          <span className="chart-big">
+            <Counter from={0.601} to={0.739} decimals={3} duration={2400} delay={500} />
+          </span>
+        </div>
+        <LineChart
+          id="hdi"
+          min={0.55}
+          max={0.78}
+          format={(v) => v.toFixed(3)}
+          points={[
+            [1990, 0.601],
+            [2000, 0.645],
+            [2010, 0.698],
+            [2022, 0.739],
+          ]}
+        />
+        <div className="source in-card">Эх сурвалж: НҮБХХ</div>
+      </Reveal>
+    </div>
+  );
+}
+
+function S24() {
+  return (
+    <div className="layout-left">
+      <Eyebrow n="10" label="Монгол ба даяаршил" />
+      <Title>Монгол Улсад нээгдсэн боломжууд</Title>
+      <div className="stats stats-4">
+        <Stat i={3} value={<Counter from={1990} to={1997} duration={1400} grouping={false} />} label="Дэлхийн худалдааны байгууллагын гишүүн болсон" accent={C.mn} />
+        <Stat i={4} value={<Counter to={197} suffix="K" />} label="монгол хүн гадаадад ажиллаж, суралцаж туршлага хуримтлуулж байна (2019)" accent={C.mn} />
+        <Stat i={5} value={<Counter to={0.741} decimals={3} />} label="HDI — «Хүний хөгжил өндөр» орны ангилалд" accent={C.mn} />
+        <Stat i={6} value={<>Оюу толгой</>} label="Монголын түүхэн дэх хамгийн том гадаадын хөрөнгө оруулалт" accent={C.mn} />
+      </div>
+      <Points start={7} items={["Гадаадад сурсан залуус мэдлэг, технологийг эх орондоо авчирч байна"]} />
+    </div>
+  );
+}
+
+function S25() {
+  return (
+    <div className="layout-final">
+      <Reveal i={0} className="hero-kicker">
+        <span className="ping" /> Дүгнэлт
+      </Reveal>
+      <h2 className="final-title">
+        <Split text="Даяаршил бол боломж" delay={150} step={110} />
+      </h2>
+      <div className="final-row">
+        {[
+          ["trend", "Баялаг, ажлын байр"],
+          ["cpu", "Мэдлэг, технологи"],
+          ["heart", "Урт, эрүүл амьдрал"],
+          ["music", "Соёлын баялаг"],
+        ].map(([ic, t], k) => (
+          <Tilt i={4 + k} key={t} className="final-chip" max={18}>
+            <Icon name={ic} size={22} />
+            {t}
+          </Tilt>
+        ))}
+      </div>
+      <Reveal i={8} className="final-key">
+        Түлхүүр нь — <b>боловсрол, гадаад хэл, дижитал ур чадвар</b>
+      </Reveal>
+      <Reveal i={10} className="thanks">
+        Анхаарал хандуулсанд баярлалаа!
+      </Reveal>
+    </div>
+  );
+}
+
+// ---------- Жагсаалт ----------
+
+export type SlideDef = { nav: string; pose: Pose; Comp: () => ReactNode };
+
+export const SLIDES: SlideDef[] = [
+  { nav: "Нүүр", Comp: S01, pose: { x: 0, y: -1.25, s: 2.7, dim: 1, color: C.hero, arcs: 1.2 } },
+  { nav: "Агуулга", Comp: S02, pose: { x: 0.52, y: 0, s: 1.45, dim: 0.9, color: "#7c9cff" } },
+  { nav: "Тодорхойлолт", Comp: S03, pose: { x: -0.5, y: 0, s: 1.45, dim: 0.95, color: C.hero, arcs: 1.4 } },
+  { nav: "Фридман", Comp: S04, pose: { x: 0, y: 0.46, s: 0.55, dim: 1, color: "#9b8cff", arcs: 1.6 } },
+  { nav: "Их Монгол Улс", Comp: S05, pose: { x: 0.55, y: 0, s: 1.5, dim: 1, color: C.hist, focus: LOC.mongolia } },
+  { nav: "6 тулгуур", Comp: S06, pose: { x: 0, y: 0, s: 1.6, dim: 0.35, color: "#57c7ff", arcs: 0.6 } },
+  { nav: "Чөлөөт худалдаа", Comp: S07, pose: { x: 0.52, y: 0, s: 1.55, dim: 1, color: C.econ, arcs: 2.2 } },
+  { nav: "Ядуурал буурсан", Comp: S08, pose: { x: -0.58, y: 0, s: 1.25, dim: 0.75, color: C.econ } },
+  { nav: "Кейс: Солонгос", Comp: S09, pose: { x: 0.55, y: 0, s: 1.5, dim: 1, color: C.econ, focus: LOC.seoul } },
+  { nav: "Кейс: Хятад", Comp: S10, pose: { x: -0.55, y: 0, s: 1.5, dim: 1, color: "#ff8a5c", focus: LOC.china } },
+  { nav: "Кейс: Вьетнам", Comp: S11, pose: { x: 0.55, y: 0, s: 1.5, dim: 1, color: "#ffcf5c", focus: LOC.hanoi } },
+  { nav: "Нийлүүлэлтийн сүлжээ", Comp: S12, pose: { x: 0.5, y: 0, s: 1.25, dim: 0.55, color: C.econ, arcs: 2.4 } },
+  { nav: "Интернет", Comp: S13, pose: { x: 0.52, y: 0, s: 1.55, dim: 1, color: C.tech, arcs: 2.6 } },
+  { nav: "Кейс: M-Pesa", Comp: S14, pose: { x: -0.55, y: 0, s: 1.5, dim: 1, color: "#3ef0c8", focus: LOC.nairobi } },
+  { nav: "Кейс: Энэтхэг", Comp: S15, pose: { x: 0.55, y: 0, s: 1.5, dim: 1, color: C.tech, focus: LOC.bengaluru } },
+  { nav: "Боловсрол", Comp: S16, pose: { x: -0.55, y: 0, s: 1.4, dim: 0.95, color: C.edu, arcs: 1.6 } },
+  { nav: "Кейс: Erasmus+", Comp: S17, pose: { x: 0.55, y: 0, s: 1.5, dim: 1, color: C.edu, focus: LOC.europe } },
+  { nav: "Эрүүл мэнд", Comp: S18, pose: { x: -0.58, y: 0, s: 1.25, dim: 0.8, color: C.health } },
+  { nav: "Кейс: Вакцин", Comp: S19, pose: { x: 0, y: 0.56, s: 0.75, dim: 1, color: C.health, focus: LOC.mainz } },
+  { nav: "Кейс: Халлю", Comp: S20, pose: { x: 0.55, y: 0, s: 1.5, dim: 1, color: C.culture, focus: LOC.seoul } },
+  { nav: "Кейс: Монгол соёл", Comp: S21, pose: { x: -0.55, y: 0, s: 1.5, dim: 1, color: C.hist, focus: LOC.mongolia } },
+  { nav: "Энх тайван", Comp: S22, pose: { x: 0.55, y: 0, s: 1.5, dim: 1, color: C.peace, focus: LOC.brussels } },
+  { nav: "Хүний хөгжил", Comp: S23, pose: { x: 0.5, y: 0, s: 1.3, dim: 0.4, color: "#7cf2ff", arcs: 1.4 } },
+  { nav: "Монгол", Comp: S24, pose: { x: 0.55, y: 0, s: 1.55, dim: 1, color: C.mn, focus: LOC.ub } },
+  { nav: "Дүгнэлт", Comp: S25, pose: { x: 0, y: 0, s: 1.25, dim: 0.55, color: C.hero, arcs: 2.4 } },
+];
