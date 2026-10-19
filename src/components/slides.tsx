@@ -230,3 +230,236 @@ function S04() {
               {e.v}
             </div>
             <div className="era-y">{e.y}</div>
+            <div className="era-who">{e.who}</div>
+            <p className="era-t">{e.t}</p>
+            <div className="era-bar" style={{ "--w": `${100 - k * 34}%` } as Vars} />
+          </Tilt>
+        ))}
+      </div>
+      <Source i={8}>Томас Л. Фридман, «Дэлхий хавтгай»</Source>
+    </div>
+  );
+}
+
+function S05() {
+  return (
+    <div className="layout-left">
+      <Eyebrow n="02" label="Түүхэн дэх даяаршил" />
+      <Title>Их Монгол Улс — түүхэн даяаршил</Title>
+      <Lead>
+        XIII зуунд Их Монгол Улс Ази, Европын ихэнх нутгийг нэг удирдлага дор нэгтгэснээр
+        «Pax Mongolica» буюу Монголын энх тайвны үе эхэлсэн.
+      </Lead>
+      <div className="grid-2">
+        <Tilt i={5} className="card">
+          <Icon name="route" />
+          <h3>Торгоны зам</h3>
+          <p>Худалдаачид Хятадаас Европ хүртэл аюулгүй зорчдог болов</p>
+        </Tilt>
+        <Tilt i={6} className="card">
+          <Icon name="mail" />
+          <h3>Өртөөний шуудан</h3>
+          <p>Евразийг холбосон мэдээллийн хурдан сүлжээ</p>
+        </Tilt>
+        <Tilt i={7} className="card">
+          <Icon name="badge" />
+          <h3>Пайз</h3>
+          <p>Зорчигчийг хамгаалсан дэлхийн анхны «паспорт»-уудын нэг</p>
+        </Tilt>
+        <Tilt i={8} className="card">
+          <Icon name="sparkle" />
+          <h3>Мэдлэг солилцоо</h3>
+          <p>Цаас, луужин, анагаах ухаан, одон орон зүй тархсан</p>
+        </Tilt>
+      </div>
+    </div>
+  );
+}
+
+function S06() {
+  const pillars = [
+    { ic: "trend", t: "Эдийн засаг", s: "Худалдаа, ажлын байр, баялаг", c: C.econ },
+    { ic: "cpu", t: "Технологи", s: "Мэдээлэл, инноваци", c: C.tech },
+    { ic: "cap", t: "Боловсрол", s: "Хил хязгааргүй мэдлэг", c: C.edu },
+    { ic: "heart", t: "Эрүүл мэнд", s: "Анагаах ухааны хамтын ололт", c: C.health },
+    { ic: "music", t: "Соёл", s: "Харилцан баяжих", c: C.culture },
+    { ic: "users", t: "Энх тайван", s: "Хамтын ажиллагаа", c: C.peace },
+  ];
+  return (
+    <div className="layout-center">
+      <Eyebrow n="03" label="Тойм" />
+      <Title>Давуу талын 6 тулгуур</Title>
+      <div className="pillars">
+        {pillars.map((p, k) => (
+          <Tilt i={3 + k} key={p.t} className="pillar" accent={p.c}>
+            <div className="pillar-ic">
+              <Icon name={p.ic} size={28} />
+            </div>
+            <div className="pillar-n">0{k + 1}</div>
+            <h3>{p.t}</h3>
+            <p>{p.s}</p>
+          </Tilt>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function S07() {
+  return (
+    <div className="layout-left">
+      <Eyebrow n="04" label="Эдийн засаг" />
+      <Title>Чөлөөт худалдаа баялгийг өсгөдөг</Title>
+      <Lead>
+        Улс бүр хамгийн сайн хийдэг зүйлдээ төвлөрч, дэлхийн зах зээлд гаргаснаар үйлдвэрлэл, орлого,
+        ажлын байр нэмэгддэг.
+      </Lead>
+      <div className="stats">
+        <Stat
+          i={5}
+          value={
+            <>
+              $<Counter to={24} />
+              <small> их наяд</small>
+            </>
+          }
+          label={<>Дэлхийн барааны экспорт, 2023 он (1950 онд ердөө $62 тэрбум)</>}
+        />
+        <Stat
+          i={6}
+          value={<Counter to={166} />}
+          label={<>Дэлхийн худалдааны байгууллагын гишүүн орон</>}
+        />
+      </div>
+      <Source>Дэлхийн худалдааны байгууллага (ДХБ)</Source>
+    </div>
+  );
+}
+
+function S08() {
+  return (
+    <div className="layout-right">
+      <Eyebrow n="04" label="Эдийн засаг" />
+      <Title>Түүхэн дэх ядуурлын хамгийн хурдан бууралт</Title>
+      <Reveal i={4} className="chart-card">
+        <div className="chart-head">
+          <span>Нэн ядуу хүн амын эзлэх хувь</span>
+          <span className="chart-big">
+            <Counter from={38} to={9} duration={2400} delay={500} suffix="%" />
+          </span>
+        </div>
+        <LineChart
+          id="pov"
+          unit="%"
+          min={0}
+          max={45}
+          labelEvery={2}
+          points={[
+            [1990, 38],
+            [1995, 35],
+            [2000, 29],
+            [2005, 21],
+            [2010, 16],
+            [2015, 10],
+            [2019, 9],
+          ]}
+        />
+      </Reveal>
+      <Lead i={6}>
+        Худалдаа, хөрөнгө оруулалтад нээлттэй болсон орнуудад <b>1 тэрбум гаруй хүн</b> нэн ядуурлаас
+        гарсан.
+      </Lead>
+      <Source i={7}>Дэлхийн банк (өдөрт $2.15-аас бага орлоготой)</Source>
+    </div>
+  );
+}
+
+function S09() {
+  return (
+    <div className="layout-left">
+      <CaseTag n="01" place="Өмнөд Солонгос" />
+      <Title>Ядуу орноос технологийн аварга болсон нь</Title>
+      <Reveal i={4} className="chart-card">
+        <div className="chart-head">
+          <span>Нэг хүнд ногдох ДНБ (ам.доллар)</span>
+        </div>
+        <Bars
+          prefix="$"
+          data={[
+            { label: "1960", value: 158 },
+            { label: "1980", value: 1715 },
+            { label: "2000", value: 12260 },
+            { label: "2023", value: 33120 },
+          ]}
+        />
+      </Reveal>
+      <Points
+        start={6}
+        items={[
+          "Экспортод чиглэсэн бодлого — дэлхийн зах зээл рүү",
+          "Samsung, Hyundai, LG дэлхийн брэнд болсон",
+          "1996 онд хөгжингүй орнуудын OECD-д элссэн",
+        ]}
+      />
+    </div>
+  );
+}
+
+function S10() {
+  return (
+    <div className="layout-right">
+      <CaseTag n="02" place="Хятад" />
+      <Title>Нээлттэй бодлогын хүч</Title>
+      <div className="mega">
+        <Reveal i={3} className="mega-v">
+          <Counter to={800} duration={2200} />
+          <small>сая</small>
+        </Reveal>
+        <Reveal i={4} className="mega-l">
+          хүн 1978 оноос хойш ядуурлаас гарсан
+        </Reveal>
+      </div>
+      <div className="timeline-mini">
+        {[
+          ["1978", "Шинэчлэл, нээлттэй бодлого"],
+          ["2001", "ДХБ-д элссэн"],
+          ["2009", "Дэлхийн хамгийн том экспортлогч"],
+        ].map(([y, t], k) => (
+          <Tilt i={5 + k} key={y} className="tm">
+            <b>{y}</b>
+            <span>{t}</span>
+          </Tilt>
+        ))}
+      </div>
+      <Source i={8}>Дэлхийн банк, 2022</Source>
+    </div>
+  );
+}
+
+function S11() {
+  return (
+    <div className="layout-left">
+      <CaseTag n="03" place="Вьетнам" />
+      <Title>«Đổi Mới» — шинэчлэлийн гайхамшиг</Title>
+      <Lead>1986 онд эдийн засгаа дэлхийд нээж, гадаадын хөрөнгө оруулалтыг урьсан.</Lead>
+      <div className="compare">
+        <Tilt i={5} className="cmp cmp-old">
+          <span>1990-ээд оны эх</span>
+          <b>
+            <Counter to={50} suffix="%+" />
+          </b>
+          <em>ядуу хүн ам</em>
+        </Tilt>
+        <div className="cmp-arrow rv" style={{ "--i": 6 } as Vars}>
+          →
+        </div>
+        <Tilt i={7} className="cmp cmp-new">
+          <span>Өнөөдөр</span>
+          <b>
+            <Counter from={50} to={5} prefix="<" suffix="%" duration={2400} delay={700} />
+          </b>
+          <em>ядуу хүн ам</em>
+        </Tilt>
+      </div>
+      <Points
+        start={8}
