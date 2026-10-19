@@ -427,3 +427,218 @@ export class GlobeScene {
           transparent: true,
           side: THREE.DoubleSide,
           depthWrite: false,
+          blending: THREE.AdditiveBlending,
+        }),
+      );
+      ring.position.copy(p);
+      ring.lookAt(p.clone().multiplyScalar(2));
+      this.spin.add(ring);
+      this.rings.push({ mesh: ring, phase: i * 0.37 });
+    });
+  }
+
+  private buildFocus() {
+    const ringMat = new THREE.MeshBasicMaterial({
+      color: 0xffffff,
+      transparent: true,
+      side: THREE.DoubleSide,
+      depthWrite: false,
+      blending: THREE.AdditiveBlending,
+    });
+    const beamMat = ringMat.clone();
+    for (let k = 0; k < 3; k++) {
+      const r = new THREE.Mesh(new THREE.RingGeometry(0.05, 0.058, 48), ringMat);
+      r.userData.k = k;
+      this.focusGroup.add(r);
+    }
+    const core = new THREE.Mesh(new THREE.CircleGeometry(0.022, 32), beamMat);
+    core.position.z = 0.002;
+    this.focusGroup.add(core);
+    this.focusGroup.userData = { ringMat, beamMat };
+    this.spin.add(this.focusGroup);
+  }
+
+  private buildOrbits() {
+    const defs = [
+      { r: 1.5, tilt: [1.2, 0.3], speed: 0.5 },
+      { r: 1.72, tilt: [1.75, -0.5], speed: -0.32 },
+    ];
+    defs.forEach((d) => {
+      const holder = new THREE.Group();
+      holder.rotation.set(d.tilt[0], d.tilt[1], 0);
+      const mat = new THREE.MeshBasicMaterial({
+        color: this.uColor.value,
+        transparent: true,
+        opacity: 0.22,
+        blending: THREE.AdditiveBlending,
+        depthWrite: false,
+      });
+      this.orbitMats.push(mat);
+      holder.add(new THREE.Mesh(new THREE.TorusGeometry(d.r, 0.0025, 8, 200), mat));
+      const sat = new THREE.Mesh(
+        new THREE.SphereGeometry(0.028, 16, 16),
+        new THREE.MeshBasicMaterial({ color: 0xffffff }),
+      );
+      holder.add(sat);
+      this.root.add(holder);
+      this.satellites.push({ mesh: sat, ring: holder, speed: d.speed, r: d.r, a: Math.random() * 6 });
+    });
+  }
+
+  // ---------- Кадр бүр ----------
+
+  private resize = () => {
+    const w = window.innerWidth;
+    const h = window.innerHeight;
+    const pr = Math.min(window.devicePixelRatio, 2);
+    this.renderer.setPixelRatio(pr);
+    this.renderer.setSize(w, h, false);
+    this.composer.setPixelRatio(pr);
+    this.composer.setSize(w, h);
+    this.bloom.resolution.set(w / 2, h / 2);
+    this.camera.aspect = w / h;
+    this.camera.updateProjectionMatrix();
+    this.uPixelRatio.value = pr;
+  };
+
+  private targetPose() {
+    const n = this.poses.length;
+    const p = Math.min(Math.max(deck.progress, 0), n - 1);
+    const i0 = Math.floor(p);
+    const i1 = Math.min(i0 + 1, n - 1);
+    const f0 = p - i0;
+    const f = f0 * f0 * (3 - 2 * f0);
+    const a = this.poses[i0];
+    const b = this.poses[i1];
+    const lerp = (x: number, y: number) => x + (y - x) * f;
+    this.tmpColor.set(a.color);
+    this.tmpColorB.set(b.color);
+    this.tmpColor.lerp(this.tmpColorB, f);
+    const near = Math.round(p);
+    const focusPose = this.poses[near];
+    const focusW = focusPose.focus ? Math.max(0, 1 - Math.abs(p - near) * 2.2) : 0;
+    return {
+      x: lerp(a.x, b.x),
+      y: lerp(a.y, b.y),
+      s: lerp(a.s, b.s),
+      dim: lerp(a.dim, b.dim),
+      arcs: lerp(a.arcs ?? 1, b.arcs ?? 1),
+      focus: focusPose.focus,
+      focusW,
+    };
+  }
+
+  private loop = () => {
+    this.raf = requestAnimationFrame(this.loop);
+    const dt = Math.min(this.clock.getDelta(), 0.05);
+    const t = this.clock.elapsedTime;
+    this.uTime.value = t;
+
+    const vel = Math.min(Math.abs(deck.velocity), 80);
+    this.uTravel.value += dt * (1.2 + vel * 0.9);
+
+    const tp = this.targetPose();
+    const aspect = this.camera.aspect;
+    const halfH = Math.tan((this.camera.fov * D2R) / 2) * this.camera.position.z;
+    const halfW = halfH * aspect;
+    const narrow = aspect < 1;
+
+    const tx = narrow ? 0 : tp.x * halfW;
+    const ty = narrow ? tp.y * halfH * 0.6 - halfH * 0.25 : tp.y * halfH;
+    const ts = tp.s * 0.95 * (narrow ? Math.max(0.55, aspect * 0.9) : Math.min(1, aspect / 1.45));
+    const tdim = narrow ? tp.dim * 0.55 : tp.dim;
+
+    const c = this.cur;
+    c.x = damp(c.x, tx, 4.2, dt);
+    c.y = damp(c.y, ty, 4.2, dt);
+    c.s = damp(c.s, ts, 4.2, dt);
+    c.dim = damp(c.dim, tdim, 4, dt);
+    c.arcs = damp(c.arcs, tp.arcs, 4, dt);
+
+    // Эргэлт — чөлөөт эргэлт эсвэл тухайн газар руу харах
+    this.freeSpin += dt * (0.09 + vel * 0.004);
+    let targetSpin = this.freeSpin;
+    let targetTilt = 0.32;
+    if (tp.focus && tp.focusW > 0) {
+      const v = ll(tp.focus[0], tp.focus[1]);
+      // Камер руу харах чиглэлийн засвар (бөмбөрцөг хажуу тийш шилжсэн үед)
+      const fs = Math.atan2(-c.x, this.camera.position.z) - Math.atan2(v.x, v.z);
+      const d = shortAngle(fs - this.freeSpin);
+      targetSpin = this.freeSpin + d * tp.focusW;
+      targetTilt = 0.32 + (tp.focus[0] * D2R * 0.85 + Math.atan2(c.y, this.camera.position.z) - 0.32) * tp.focusW;
+      if (tp.focusW > 0.97) this.freeSpin = c.spin;
+    }
+    c.spin += shortAngle(targetSpin - c.spin) * (1 - Math.exp(-3.2 * dt));
+    c.tilt = damp(c.tilt, targetTilt, 3, dt);
+
+    this.root.position.set(c.x + deck.mouseX * 0.06, c.y + deck.mouseY * 0.04, 0);
+    this.root.scale.setScalar(c.s);
+    this.root.rotation.x = c.tilt + deck.mouseY * 0.08;
+    this.root.rotation.z = -0.08 + deck.mouseX * 0.03;
+    this.spin.rotation.y = c.spin + deck.mouseX * 0.18;
+
+    this.uColor.value.lerp(this.tmpColor, 1 - Math.exp(-4 * dt));
+    this.uColor2.value.setHSL(((t * 0.02) % 1 + 0.62) % 1, 0.7, 0.55).lerp(this.uColor.value, 0.35);
+    this.uDim.value = c.dim;
+    this.uArcs.value = c.arcs;
+    this.gridMat.color.copy(this.uColor.value);
+    this.gridMat.opacity = 0.07 * c.dim;
+
+    for (const r of this.rings) {
+      const k = (t * 0.6 + r.phase) % 1;
+      r.mesh.scale.setScalar(1 + k * 2.4);
+      const m = r.mesh.material as THREE.MeshBasicMaterial;
+      m.color.copy(this.uColor.value);
+      m.opacity = (1 - k) * 0.9 * c.dim;
+    }
+
+    // Сонгосон газрын тэмдэглэгээ
+    if (tp.focus) {
+      const p = ll(tp.focus[0], tp.focus[1], 1.008);
+      this.focusGroup.position.copy(p);
+      this.focusGroup.quaternion.setFromUnitVectors(this.zAxis, p.normalize());
+    }
+    const fw = tp.focusW * c.dim;
+    this.focusGroup.children.forEach((ch) => {
+      if (ch.userData.k !== undefined) {
+        const k = (t * 0.55 + ch.userData.k / 3) % 1;
+        ch.scale.setScalar(0.6 + k * 2.8);
+      }
+    });
+    this.focusMat.opacity = fw * 0.9;
+    this.focusMat.color.copy(this.uColor.value).lerp(this.white, 0.4);
+    this.beamMat.opacity = fw * 0.85;
+    this.beamMat.color.copy(this.focusMat.color);
+
+    for (const s of this.satellites) {
+      s.a += dt * s.speed * (1 + vel * 0.02);
+      s.mesh.position.set(Math.cos(s.a) * s.r, Math.sin(s.a) * s.r, 0);
+      s.ring.rotation.z += dt * 0.05;
+    }
+    this.orbitMats.forEach((m) => {
+      m.color.copy(this.uColor.value);
+      m.opacity = 0.22 * c.dim;
+    });
+
+    this.camera.position.x = deck.mouseX * 0.12;
+    this.camera.position.y = deck.mouseY * 0.08;
+    this.camera.lookAt(0, 0, 0);
+    this.bloom.strength = 0.55 + Math.min(vel, 60) * 0.006;
+
+    this.composer.render();
+  };
+
+  dispose() {
+    cancelAnimationFrame(this.raf);
+    window.removeEventListener("resize", this.resize);
+    this.scene.traverse((o) => {
+      const m = o as THREE.Mesh;
+      m.geometry?.dispose();
+      const mat = m.material as THREE.Material | THREE.Material[] | undefined;
+      if (Array.isArray(mat)) mat.forEach((x) => x.dispose());
+      else mat?.dispose();
+    });
+    this.composer.dispose();
+    this.renderer.dispose();
+  }
+}
