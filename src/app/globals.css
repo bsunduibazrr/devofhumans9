@@ -434,3 +434,440 @@ button {
 }
 .tilt::after {
   content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: radial-gradient(260px circle at var(--mx) var(--my), var(--accent), transparent 65%);
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+.tilt-glare {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: radial-gradient(
+    420px circle at var(--mx) var(--my),
+    color-mix(in oklab, var(--accent) 24%, transparent),
+    transparent 50%
+  );
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+.tilt > :not(.tilt-glare) {
+  position: relative;
+  transform: translateZ(0);
+  transition: transform 0.7s var(--ease);
+}
+.tilt:hover {
+  --s: 1.045;
+  transition:
+    transform 0.18s ease-out,
+    box-shadow 0.5s ease;
+  box-shadow: 0 40px 90px -40px color-mix(in oklab, var(--accent) 70%, transparent);
+  z-index: 3;
+}
+.tilt:hover::after,
+.tilt:hover .tilt-glare {
+  opacity: 1;
+}
+.tilt:hover > :not(.tilt-glare) {
+  transform: translateZ(36px);
+}
+@keyframes float {
+  0%, 100% { translate: 0 0; }
+  50% { translate: 0 -0.7vh; }
+}
+
+/* ================= Карт, статистик ================= */
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7vh;
+  height: 100%;
+}
+.card svg {
+  color: var(--accent);
+  filter: drop-shadow(0 0 10px color-mix(in oklab, var(--accent) 70%, transparent));
+}
+.card h3 {
+  margin: 0.4vh 0 0;
+  font-family: var(--font-display), sans-serif;
+  font-weight: 500;
+  font-size: calc(var(--fs-body) * 1.12);
+  letter-spacing: -0.01em;
+}
+.card p {
+  margin: 0;
+  font-size: calc(var(--fs-body) * 0.92);
+  color: var(--muted);
+  line-height: 1.45;
+}
+
+.grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(10px, 1.1vw, 18px);
+}
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(10px, 1.1vw, 18px);
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(10px, 1.1vw, 18px);
+}
+.stat-v {
+  font-family: var(--font-display), sans-serif;
+  font-weight: 700;
+  font-size: clamp(1.7rem, min(3.4vw, 6vh), 4rem);
+  line-height: 1;
+  letter-spacing: -0.03em;
+  background: linear-gradient(120deg, #fff 20%, var(--accent));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  white-space: nowrap;
+}
+.stat-v small {
+  font-size: 0.42em;
+  font-weight: 500;
+  letter-spacing: 0;
+}
+.stat-l {
+  margin-top: 1vh;
+  font-size: calc(var(--fs-body) * 0.92);
+  color: var(--muted);
+  line-height: 1.4;
+}
+.stats-4 .stat-v {
+  font-size: clamp(1.5rem, min(2.8vw, 5vh), 3.3rem);
+}
+
+.counter {
+  font-variant-numeric: tabular-nums;
+}
+
+.mega {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6vh;
+}
+.mega-v {
+  font-family: var(--font-display), sans-serif;
+  font-weight: 800;
+  font-size: clamp(3rem, min(8.6vw, 15vh), 10rem);
+  line-height: 0.92;
+  letter-spacing: -0.04em;
+  background: linear-gradient(120deg, #fff 10%, var(--accent) 70%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 0 40px color-mix(in oklab, var(--accent) 35%, transparent));
+}
+.mega-v small {
+  font-size: 0.3em;
+  font-weight: 500;
+  margin-left: 0.25em;
+  letter-spacing: 0;
+}
+.mega-l {
+  font-size: var(--fs-lead);
+  color: var(--muted);
+  max-width: 34ch;
+}
+
+/* ================= Графикууд ================= */
+
+.chart-card {
+  position: relative;
+  padding: clamp(14px, min(1.6vw, 2.8vh), 26px);
+  border-radius: var(--radius);
+  background: linear-gradient(150deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.015)), var(--glass);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  transition: border-color 0.4s ease, box-shadow 0.5s ease, scale 0.6s var(--ease);
+}
+.chart-card:hover {
+  border-color: color-mix(in oklab, var(--accent) 50%, transparent);
+  box-shadow: 0 40px 90px -45px var(--accent);
+  scale: 1.015;
+}
+.chart-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 1em;
+  font-size: var(--fs-small);
+  font-family: var(--font-mono), monospace;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+  text-transform: uppercase;
+}
+.chart-big {
+  font-family: var(--font-display), sans-serif;
+  font-size: clamp(1.6rem, min(3vw, 5.4vh), 3.4rem);
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: -0.02em;
+  text-transform: none;
+  line-height: 1;
+}
+.chart {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 32vh;
+  margin-top: 0.6vh;
+  overflow: visible;
+}
+.chart-grid {
+  stroke: rgba(255, 255, 255, 0.07);
+  stroke-dasharray: 3 5;
+}
+.chart-line {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 3.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  transition: stroke-dashoffset 0.4s ease;
+}
+.is-active .chart-line {
+  stroke-dashoffset: 0;
+  transition: stroke-dashoffset 2.4s var(--ease-io) 0.5s;
+}
+.chart-area {
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+.is-active .chart-area {
+  opacity: 1;
+  transition: opacity 1.4s ease 1.4s;
+}
+.chart-pt {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.chart-pt circle {
+  fill: var(--bg);
+  stroke: var(--accent);
+  stroke-width: 3;
+  transform-box: fill-box;
+  transform-origin: center;
+  transition: transform 0.35s var(--ease);
+}
+.chart-pt:hover circle {
+  transform: scale(1.7);
+  fill: var(--accent);
+}
+.is-active .chart-pt {
+  opacity: 1;
+  transition: opacity 0.6s ease calc(var(--i) * 0.32s + 0.7s);
+}
+.chart-val {
+  fill: #fff;
+  font-family: var(--font-mono), monospace;
+  font-size: 16px;
+  font-weight: 600;
+}
+.chart-year {
+  fill: var(--faint);
+  font-family: var(--font-mono), monospace;
+  font-size: 13px;
+}
+
+.bars {
+  display: flex;
+  align-items: stretch;
+  gap: clamp(10px, 1.4vw, 22px);
+  height: 25vh;
+  margin-top: 1.2vh;
+}
+.bar {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8vh;
+  text-align: center;
+}
+.bar-val {
+  font-family: var(--font-mono), monospace;
+  font-size: var(--fs-small);
+  font-weight: 600;
+  color: #fff;
+}
+.bar-track {
+  flex: 1;
+  position: relative;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.04);
+}
+.bar-fill {
+  position: absolute;
+  inset: auto 0 0;
+  height: max(3px, calc(var(--h) * 100%));
+  border-radius: 12px;
+  background: linear-gradient(to top, color-mix(in oklab, var(--accent) 20%, transparent), var(--accent));
+  box-shadow: 0 0 30px color-mix(in oklab, var(--accent) 50%, transparent);
+  transform: scaleY(0);
+  transform-origin: bottom;
+  transition: transform 0.4s ease, filter 0.3s ease;
+}
+.is-active .bar-fill {
+  transform: scaleY(1);
+  transition:
+    transform 1.6s var(--ease) calc(var(--i) * 0.18s + 0.45s),
+    filter 0.3s ease;
+}
+.bar:hover .bar-fill {
+  filter: brightness(1.35) saturate(1.2);
+}
+.bar-label {
+  font-family: var(--font-mono), monospace;
+  font-size: var(--fs-small);
+  color: var(--faint);
+}
+
+/* ================= 01 Нүүр ================= */
+
+.layout-hero {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  text-align: center;
+  padding-top: 3vh;
+  gap: 2vh;
+}
+.hero-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.9em;
+  font-family: var(--font-mono), monospace;
+  font-size: var(--fs-small);
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--muted);
+  padding: 0.7em 1.3em;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(10px);
+}
+.hero-title {
+  margin: 0;
+  font-family: var(--font-display), sans-serif;
+  font-weight: 800;
+  font-size: clamp(2.6rem, min(10.2vw, 19vh), 12.5rem);
+  line-height: 1;
+  white-space: nowrap;
+  letter-spacing: -0.03em;
+  perspective: 800px;
+  filter: drop-shadow(0 0 40px color-mix(in oklab, var(--accent) 40%, transparent));
+}
+.hero-ch {
+  display: inline-block;
+  background-image: linear-gradient(100deg, #ffffff 0%, #bff6ff 30%, var(--accent) 55%, #8f7bff 80%, #ffffff 100%);
+  background-size: 800% 100%;
+  background-position: calc(var(--k) / 7 * 100%) 0;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  transform: translateY(40%) rotateX(-95deg);
+  transform-origin: 50% 100%;
+  opacity: 0;
+  transition: transform 0.4s ease, opacity 0.3s ease;
+}
+.is-active .hero-ch {
+  transform: none;
+  opacity: 1;
+  transition:
+    transform 1.4s var(--ease) calc(var(--k) * 70ms + 250ms),
+    opacity 0.9s ease calc(var(--k) * 70ms + 250ms);
+  animation: bob 4.5s ease-in-out infinite;
+  animation-delay: calc(var(--k) * 0.18s);
+}
+.hero-ch:hover {
+  scale: 1.12;
+  transition: scale 0.4s var(--ease);
+}
+@keyframes bob {
+  0%, 100% { translate: 0 0; }
+  50% { translate: 0 -3%; }
+}
+.hero-sub {
+  font-family: var(--font-display), sans-serif;
+  font-weight: 300;
+  font-size: clamp(1.2rem, min(2.8vw, 5vh), 3rem);
+  letter-spacing: 0.02em;
+  color: var(--muted);
+  margin-top: -1vh;
+}
+.hero-sub em {
+  font-style: normal;
+  font-weight: 600;
+  color: var(--fg);
+  background: linear-gradient(90deg, var(--accent), #a78bfa, var(--accent));
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: slide-bg 4s linear infinite;
+}
+@keyframes slide-bg {
+  to { background-position: 200% 0; }
+}
+.hero-hint {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.8em;
+  font-family: var(--font-mono), monospace;
+  font-size: var(--fs-small);
+  color: var(--faint);
+  letter-spacing: 0.12em;
+  margin-top: 1vh;
+}
+.mouse {
+  width: 18px;
+  height: 28px;
+  border: 1.5px solid var(--faint);
+  border-radius: 10px;
+  display: inline-flex;
+  justify-content: center;
+  padding-top: 5px;
+}
+.mouse span {
+  width: 2px;
+  height: 6px;
+  border-radius: 2px;
+  background: var(--accent);
+  animation: wheel 1.6s var(--ease) infinite;
+}
+@keyframes wheel {
+  0% { transform: translateY(0); opacity: 1; }
+  100% { transform: translateY(9px); opacity: 0; }
+}
+.marquee {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 6vh;
+  overflow: hidden;
+  pointer-events: none;
+  mask-image: linear-gradient(90deg, transparent, #000 15%, #000 85%, transparent);
