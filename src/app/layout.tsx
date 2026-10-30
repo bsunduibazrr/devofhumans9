@@ -20,8 +20,8 @@ const mono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Даяаршил — давуу талууд",
-  description: "Хүний хөгжил хичээл: Даяаршил ба түүний давуу талууд",
+  title: "sem-9",
+  description: "sem9",
 };
 
 export const viewport: Viewport = {
@@ -30,7 +30,10 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="mn" className={`${display.variable} ${body.variable} ${mono.variable} antialiased`}>
+    <html
+      lang="mn"
+      className={`${display.variable} ${body.variable} ${mono.variable} antialiased`}
+    >
       <body>{children}</body>
     </html>
   );
