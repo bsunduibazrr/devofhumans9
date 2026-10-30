@@ -3,28 +3,31 @@
 @property --accent {
   syntax: "<color>";
   inherits: true;
-  initial-value: #38e1ff;
+  initial-value: #38bdf8;
 }
 
 :root {
-  --bg: #02040a;
-  --fg: #eef3ff;
-  --muted: rgba(214, 224, 255, 0.66);
-  --faint: rgba(214, 224, 255, 0.4);
-  --line: rgba(255, 255, 255, 0.1);
-  --glass: rgba(16, 22, 42, 0.42);
-  --accent: #38e1ff;
+  --bg: #07090e;
+  --surface: #0e121a;
+  --surface-hover: #141a26;
+  --fg: #f8f9fb;
+  --muted: #94a3b8;
+  --faint: #525866;
+  --line: rgba(255, 255, 255, 0.08);
+  --line-strong: rgba(255, 255, 255, 0.16);
+  --glass: rgba(13, 17, 26, 0.76);
+  --accent: #38bdf8;
   --ease: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-io: cubic-bezier(0.65, 0, 0.35, 1);
-  --pad-y: 11vh;
-  --pad-x: 6.5vw;
-  --fs-h2: clamp(1.6rem, min(3.2vw, 6vh), 4rem);
-  --fs-lead: clamp(0.95rem, min(1.3vw, 2.35vh), 1.45rem);
-  --fs-body: clamp(0.85rem, min(1.02vw, 1.9vh), 1.15rem);
-  --fs-small: clamp(0.7rem, min(0.82vw, 1.5vh), 0.95rem);
-  --radius: clamp(14px, 1.5vw, 24px);
+  --pad-y: 10vh;
+  --pad-x: 7vw;
+  --fs-h2: clamp(1.8rem, min(3.2vw, 5.8vh), 3.8rem);
+  --fs-lead: clamp(0.95rem, min(1.2vw, 2.2vh), 1.35rem);
+  --fs-body: clamp(0.85rem, min(1vw, 1.8vh), 1.08rem);
+  --fs-small: clamp(0.68rem, min(0.8vw, 1.4vh), 0.88rem);
+  --radius: 14px;
   color-scheme: dark;
-  transition: --accent 1s var(--ease);
+  transition: --accent 0.8s var(--ease);
 }
 
 html {
@@ -46,10 +49,12 @@ body {
   font-family: var(--font-body), system-ui, sans-serif;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 ::selection {
-  background: color-mix(in oklab, var(--accent) 45%, transparent);
+  background: color-mix(in oklab, var(--accent) 30%, transparent);
+  color: #fff;
 }
 
 ::-webkit-scrollbar {
@@ -65,7 +70,7 @@ button {
   cursor: pointer;
 }
 
-/* ================= Дэвсгэр ================= */
+/* ================= Арын дэвсгэр ================= */
 
 .globe-canvas {
   position: fixed;
@@ -75,27 +80,20 @@ button {
   display: block;
   z-index: 0;
   opacity: 0;
-  transition: opacity 1.6s ease 0.4s;
+  transition: opacity 1.4s ease 0.3s;
 }
 .globe-canvas.is-ready {
   opacity: 1;
 }
 
+/* Нарийн мөхлөгт аналог бүтэц (tactile editorial texture) */
 .grain {
   position: fixed;
   inset: -50%;
   z-index: 1;
   pointer-events: none;
-  opacity: 0.07;
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
-  animation: grain 0.9s steps(4) infinite;
-}
-@keyframes grain {
-  0% { transform: translate(0, 0); }
-  25% { transform: translate(-3%, 2%); }
-  50% { transform: translate(2%, -3%); }
-  75% { transform: translate(-1%, 3%); }
-  100% { transform: translate(3%, -1%); }
+  opacity: 0.04;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
 }
 
 .vignette {
@@ -104,8 +102,8 @@ button {
   z-index: 1;
   pointer-events: none;
   background:
-    radial-gradient(120% 90% at 50% 50%, transparent 55%, rgba(0, 0, 0, 0.55) 100%),
-    linear-gradient(90deg, rgba(2, 4, 10, 0.35), transparent 30%, transparent 70%, rgba(2, 4, 10, 0.35));
+    radial-gradient(130% 100% at 50% 50%, transparent 45%, rgba(4, 6, 10, 0.65) 100%),
+    linear-gradient(90deg, rgba(7, 9, 14, 0.5) 0%, transparent 25%, transparent 75%, rgba(7, 9, 14, 0.5) 100%);
 }
 
 /* ================= Тайз ба слайд ================= */
@@ -114,8 +112,8 @@ button {
   position: fixed;
   inset: 0;
   z-index: 2;
-  perspective: 1300px;
-  perspective-origin: 50% 42%;
+  perspective: 1200px;
+  perspective-origin: 50% 45%;
   pointer-events: none;
 }
 
@@ -139,11 +137,11 @@ button {
 
 .layout-left,
 .layout-right {
-  width: min(48vw, 780px);
+  width: min(50vw, 760px);
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 2.4vh;
+  gap: 2.2vh;
 }
 .layout-right {
   margin-left: auto;
@@ -167,93 +165,71 @@ button {
 .layout-split {
   width: 100%;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1.05fr 0.95fr;
   gap: 5vw;
   align-items: center;
 }
 .layout-split > div:first-child {
   display: flex;
   flex-direction: column;
-  gap: 2.4vh;
+  gap: 2.2vh;
 }
 
-/* ================= Илрэх анимэйшн ================= */
+/* ================= Илрэх хөдөлгөөн (Cinematic Easing) ================= */
 
 .rv {
   opacity: 0;
-  transform: translate3d(0, 4.5vh, 0) scale(0.96);
-  filter: blur(10px);
+  transform: translate3d(0, 3vh, 0);
   transition:
-    opacity 0.45s ease,
-    transform 0.45s ease,
-    filter 0.45s ease;
+    opacity 0.4s ease,
+    transform 0.4s ease;
 }
 .is-active .rv {
   opacity: 1;
   transform: none;
-  filter: none;
   transition:
-    opacity 1s ease calc(var(--i, 0) * 80ms + 160ms),
-    transform 1.2s var(--ease) calc(var(--i, 0) * 80ms + 160ms),
-    filter 1s ease calc(var(--i, 0) * 80ms + 160ms);
+    opacity 0.8s ease calc(var(--i, 0) * 75ms + 120ms),
+    transform 0.95s var(--ease) calc(var(--i, 0) * 75ms + 120ms);
 }
 
+/* Цэвэр Швейцарь үгэн маск гарчиг */
 .split {
   display: inline;
 }
 .split .w {
   display: inline-block;
   overflow: clip;
-  overflow-clip-margin: 0.2em;
-  padding: 0 0.04em 0.14em;
-  margin-bottom: -0.14em;
+  overflow-clip-margin: 0.15em;
+  padding: 0 0.03em 0.12em;
+  margin-bottom: -0.12em;
   vertical-align: top;
 }
 .split .wi {
   display: inline-block;
-  transform: translateY(115%) rotate(7deg);
+  transform: translateY(115%);
   opacity: 0;
-  transform-origin: 0 100%;
+  color: var(--fg);
   transition:
-    transform 0.4s ease,
+    transform 0.35s ease,
     opacity 0.3s ease;
-  background-image: linear-gradient(110deg, var(--fg) 38%, var(--accent) 50%, var(--fg) 62%);
-  background-size: 300% 100%;
-  background-position: 100% 0;
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  animation: shine 7s linear infinite;
-  animation-delay: var(--wd);
 }
 .is-active .split .wi {
   transform: none;
   opacity: 1;
   transition:
-    transform 1.1s var(--ease) calc(var(--wd) + 120ms),
-    opacity 0.8s ease calc(var(--wd) + 120ms);
-}
-@keyframes shine {
-  0% { background-position: 100% 0; }
-  45%, 100% { background-position: 0% 0; }
+    transform 0.85s var(--ease) calc(var(--wd) + 80ms),
+    opacity 0.6s ease calc(var(--wd) + 80ms);
 }
 
-/* Слайдын дотор гүнтэй параллакс */
-.slide .h2,
-.slide .eyebrow,
-.slide .case-tag {
-  translate: 0 calc(var(--t, 0) * -6vh);
-}
-
-/* ================= Типографи ================= */
+/* ================= Типографи & Элементүүд ================= */
 
 .eyebrow {
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  gap: 0.9em;
+  gap: 0.7em;
   font-family: var(--font-mono), monospace;
   font-size: var(--fs-small);
-  letter-spacing: 0.22em;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--accent);
 }
@@ -261,21 +237,43 @@ button {
   justify-content: center;
 }
 .eyebrow-n {
-  padding: 0.35em 0.7em;
-  border: 1px solid color-mix(in oklab, var(--accent) 50%, transparent);
-  border-radius: 999px;
-  letter-spacing: 0.1em;
+  font-weight: 600;
+  color: var(--accent);
 }
-.eyebrow-line {
-  width: 3.5em;
-  height: 1px;
-  background: linear-gradient(90deg, var(--accent), transparent);
-  transform-origin: left;
-  animation: line-pulse 3s var(--ease-io) infinite;
+.eyebrow-sep {
+  color: var(--faint);
 }
-@keyframes line-pulse {
-  0%, 100% { transform: scaleX(0.4); opacity: 0.5; }
-  50% { transform: scaleX(1); opacity: 1; }
+
+.case-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 1em;
+  font-family: var(--font-mono), monospace;
+  font-size: var(--fs-small);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+.case-pill {
+  padding: 0.35em 0.85em;
+  border-radius: 6px;
+  background: var(--accent);
+  color: #07090e;
+  font-weight: 700;
+  font-size: 0.85em;
+  letter-spacing: 0.14em;
+}
+.case-place {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7em;
+  color: var(--muted);
+  font-weight: 500;
+}
+.case-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--accent);
 }
 
 .h2 {
@@ -283,17 +281,18 @@ button {
   font-family: var(--font-display), sans-serif;
   font-weight: 600;
   font-size: var(--fs-h2);
-  line-height: 1.12;
-  letter-spacing: -0.025em;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
   text-wrap: balance;
+  color: var(--fg);
 }
 
 .lead {
   margin: 0;
   font-size: var(--fs-lead);
-  line-height: 1.55;
+  line-height: 1.58;
   color: var(--muted);
-  max-width: 44ch;
+  max-width: 48ch;
   text-wrap: pretty;
 }
 .layout-center .lead {
@@ -306,12 +305,12 @@ button {
 
 .source {
   font-family: var(--font-mono), monospace;
-  font-size: calc(var(--fs-small) * 0.9);
+  font-size: calc(var(--fs-small) * 0.92);
   color: var(--faint);
-  letter-spacing: 0.04em;
+  letter-spacing: 0.05em;
 }
 .source.in-card {
-  margin-top: 1vh;
+  margin-top: 1.2vh;
 }
 
 .points {
@@ -320,239 +319,258 @@ button {
   padding: 0;
   display: flex;
   flex-direction: column;
-  gap: 1.1vh;
+  gap: 1.2vh;
 }
 .point {
   display: flex;
-  gap: 0.9em;
+  gap: 0.85em;
   align-items: baseline;
   font-size: var(--fs-body);
   color: var(--muted);
-  line-height: 1.45;
-  transition: color 0.3s ease, translate 0.4s var(--ease);
+  line-height: 1.5;
+  transition: color 0.25s ease, transform 0.3s var(--ease);
 }
 .point:hover {
   color: var(--fg);
-  translate: 8px 0;
+  transform: translateX(4px);
 }
 .point-dot {
   flex: none;
-  width: 0.55em;
-  height: 0.55em;
-  border-radius: 50%;
+  width: 6px;
+  height: 6px;
+  border-radius: 2px;
   background: var(--accent);
-  box-shadow: 0 0 12px var(--accent), 0 0 0 4px color-mix(in oklab, var(--accent) 18%, transparent);
-  translate: 0 -0.05em;
+  opacity: 0.85;
+  transform: translateY(-0.1em);
 }
 
-.ping {
-  position: relative;
-  display: inline-block;
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: var(--accent);
-  box-shadow: 0 0 10px var(--accent);
-}
-.ping::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: 50%;
-  border: 1px solid var(--accent);
-  animation: ping 1.8s var(--ease) infinite;
-}
-@keyframes ping {
-  0% { transform: scale(1); opacity: 1; }
-  100% { transform: scale(3.6); opacity: 0; }
-}
-
-.case-tag {
-  display: flex;
-  align-items: center;
-  gap: 1em;
-  font-family: var(--font-mono), monospace;
-  font-size: var(--fs-small);
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-}
-.case-pill {
-  padding: 0.5em 1em;
-  border-radius: 999px;
-  color: #050810;
-  background: var(--accent);
-  font-weight: 700;
-  box-shadow: 0 0 30px color-mix(in oklab, var(--accent) 55%, transparent);
-  animation: pill-glow 2.6s ease-in-out infinite;
-}
-@keyframes pill-glow {
-  50% { box-shadow: 0 0 50px color-mix(in oklab, var(--accent) 85%, transparent); }
-}
-.case-place {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.8em;
-  color: var(--fg);
-}
-
-/* ================= 3D карт ================= */
+/* ================= Архитектур хавтан (Tactile Editorial Panel) ================= */
 
 .tilt-wrap {
   min-width: 0;
 }
 .tilt {
-  --rx: 0deg;
-  --ry: 0deg;
-  --s: 1;
-  --mx: 50%;
-  --my: 50%;
   position: relative;
   border-radius: var(--radius);
-  padding: clamp(14px, min(1.6vw, 2.8vh), 28px);
-  transform: perspective(900px) rotateX(var(--rx)) rotateY(var(--ry)) scale(var(--s));
-  transform-style: preserve-3d;
+  padding: clamp(16px, min(1.6vw, 2.8vh), 26px);
+  background: var(--glass);
+  border: 1px solid var(--line);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   transition:
-    transform 0.7s var(--ease),
-    box-shadow 0.5s ease;
-  animation: float 7s ease-in-out infinite;
-  animation-delay: calc(var(--i, 0) * -0.9s);
-  will-change: transform;
-}
-.tilt::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  border-radius: inherit;
-  background:
-    linear-gradient(140deg, rgba(255, 255, 255, 0.09), rgba(255, 255, 255, 0.015) 60%),
-    var(--glass);
-  border: 1px solid rgba(255, 255, 255, 0.09);
-  backdrop-filter: blur(16px) saturate(150%);
-  -webkit-backdrop-filter: blur(16px) saturate(150%);
-  transition: border-color 0.4s ease;
-}
-.tilt::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  padding: 1px;
-  background: radial-gradient(260px circle at var(--mx) var(--my), var(--accent), transparent 65%);
-  -webkit-mask:
-    linear-gradient(#000 0 0) content-box,
-    linear-gradient(#000 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  opacity: 0;
-  transition: opacity 0.4s ease;
-  pointer-events: none;
-}
-.tilt-glare {
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  pointer-events: none;
-  background: radial-gradient(
-    420px circle at var(--mx) var(--my),
-    color-mix(in oklab, var(--accent) 24%, transparent),
-    transparent 50%
-  );
-  opacity: 0;
-  transition: opacity 0.4s ease;
-}
-.tilt > :not(.tilt-glare) {
-  position: relative;
-  transform: translateZ(0);
-  transition: transform 0.7s var(--ease);
+    transform 0.4s var(--ease),
+    border-color 0.3s ease,
+    background 0.3s ease,
+    box-shadow 0.4s ease;
 }
 .tilt:hover {
-  --s: 1.045;
-  transition:
-    transform 0.18s ease-out,
-    box-shadow 0.5s ease;
-  box-shadow: 0 40px 90px -40px color-mix(in oklab, var(--accent) 70%, transparent);
-  z-index: 3;
-}
-.tilt:hover::after,
-.tilt:hover .tilt-glare {
-  opacity: 1;
-}
-.tilt:hover > :not(.tilt-glare) {
-  transform: translateZ(36px);
-}
-@keyframes float {
-  0%, 100% { translate: 0 0; }
-  50% { translate: 0 -0.7vh; }
+  transform: translateY(-3px);
+  border-color: var(--line-strong);
+  background: rgba(18, 23, 34, 0.85);
+  box-shadow: 0 16px 36px -12px rgba(0, 0, 0, 0.65);
 }
 
-/* ================= Карт, статистик ================= */
+/* ================= 01 Нүүр ================= */
 
-.card {
+.layout-hero {
+  width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 0.7vh;
-  height: 100%;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 2.2vh;
+  margin-top: -3vh;
 }
-.card svg {
-  color: var(--accent);
-  filter: drop-shadow(0 0 10px color-mix(in oklab, var(--accent) 70%, transparent));
-}
-.card h3 {
-  margin: 0.4vh 0 0;
-  font-family: var(--font-display), sans-serif;
-  font-weight: 500;
-  font-size: calc(var(--fs-body) * 1.12);
-  letter-spacing: -0.01em;
-}
-.card p {
-  margin: 0;
-  font-size: calc(var(--fs-body) * 0.92);
+.hero-kicker {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--font-mono), monospace;
+  font-size: var(--fs-small);
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
   color: var(--muted);
-  line-height: 1.45;
+  padding: 0.55em 1.2em;
+  border-radius: 6px;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.02);
+}
+.hero-title {
+  margin: 0;
+  font-family: var(--font-display), sans-serif;
+  font-weight: 700;
+  font-size: clamp(3rem, min(10vw, 18vh), 11.5rem);
+  line-height: 0.95;
+  letter-spacing: -0.04em;
+  white-space: nowrap;
+  color: var(--fg);
+}
+.hero-ch {
+  display: inline-block;
+  transform: translateY(30%);
+  opacity: 0;
+  transition: transform 0.4s ease, opacity 0.3s ease;
+}
+.is-active .hero-ch {
+  transform: none;
+  opacity: 1;
+  transition:
+    transform 1s var(--ease) calc(var(--k) * 60ms + 180ms),
+    opacity 0.7s ease calc(var(--k) * 60ms + 180ms);
+}
+.hero-sub {
+  font-family: var(--font-body), sans-serif;
+  font-weight: 400;
+  font-size: clamp(1.1rem, min(2vw, 3.8vh), 2.1rem);
+  letter-spacing: -0.01em;
+  color: var(--muted);
+  max-width: 44ch;
+}
+.hero-sub em {
+  font-style: normal;
+  font-weight: 600;
+  color: var(--fg);
+}
+.hero-meta {
+  display: flex;
+  align-items: center;
+  gap: 1.2em;
+  font-family: var(--font-mono), monospace;
+  font-size: calc(var(--fs-small) * 0.95);
+  letter-spacing: 0.16em;
+  color: var(--faint);
+  margin-top: 0.5vh;
+}
+.hero-meta-dot {
+  color: var(--accent);
+}
+.hero-hint {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.8em;
+  font-family: var(--font-mono), monospace;
+  font-size: calc(var(--fs-small) * 0.9);
+  color: var(--faint);
+  letter-spacing: 0.12em;
+  margin-top: 2vh;
+}
+.mouse {
+  width: 16px;
+  height: 24px;
+  border: 1.5px solid var(--faint);
+  border-radius: 8px;
+  display: inline-flex;
+  justify-content: center;
+  padding-top: 4px;
+}
+.mouse span {
+  width: 2px;
+  height: 5px;
+  border-radius: 1px;
+  background: var(--accent);
 }
 
-.grid-2 {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: clamp(10px, 1.1vw, 18px);
-}
-.grid-3 {
+/* ================= 02 Агуулга / 6 Тулгуур ================= */
+
+.pillars {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: clamp(10px, 1.1vw, 18px);
+  gap: clamp(12px, 1.3vw, 20px);
+  width: min(100%, 1160px);
+  margin-top: 1vh;
 }
+.pillar {
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8vh;
+  padding: clamp(18px, min(1.8vw, 3vh), 28px);
+  border-radius: var(--radius);
+  background: var(--glass);
+  border: 1px solid var(--line);
+  backdrop-filter: blur(20px);
+  transition:
+    transform 0.35s var(--ease),
+    border-color 0.3s ease,
+    background 0.3s ease;
+}
+.pillar:hover {
+  transform: translateY(-4px);
+  border-color: var(--line-strong);
+  background: rgba(18, 24, 36, 0.85);
+}
+.pillar-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.pillar-n {
+  font-family: var(--font-mono), monospace;
+  font-size: var(--fs-small);
+  font-weight: 600;
+  color: var(--accent);
+  letter-spacing: 0.1em;
+}
+.pillar-arrow {
+  font-size: var(--fs-small);
+  color: var(--faint);
+  transition: transform 0.3s var(--ease), color 0.3s ease;
+}
+.pillar:hover .pillar-arrow {
+  color: var(--fg);
+  transform: translateX(4px);
+}
+.pillar h3 {
+  margin: 0.4vh 0 0;
+  font-family: var(--font-display), sans-serif;
+  font-weight: 600;
+  font-size: clamp(1.05rem, min(1.4vw, 2.4vh), 1.45rem);
+  letter-spacing: -0.015em;
+  color: var(--fg);
+}
+.pillar p {
+  margin: 0;
+  font-size: calc(var(--fs-body) * 0.95);
+  color: var(--muted);
+  line-height: 1.48;
+}
+
+/* ================= Статистик & Үзүүлэлт ================= */
 
 .stats {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: clamp(10px, 1.1vw, 18px);
+  gap: clamp(12px, 1.2vw, 18px);
+}
+.stat {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6vh;
 }
 .stat-v {
   font-family: var(--font-display), sans-serif;
   font-weight: 700;
-  font-size: clamp(1.7rem, min(3.4vw, 6vh), 4rem);
+  font-size: clamp(1.8rem, min(3.2vw, 5.6vh), 3.8rem);
   line-height: 1;
   letter-spacing: -0.03em;
-  background: linear-gradient(120deg, #fff 20%, var(--accent));
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  white-space: nowrap;
+  color: var(--fg);
 }
 .stat-v small {
-  font-size: 0.42em;
+  font-size: 0.38em;
   font-weight: 500;
-  letter-spacing: 0;
+  letter-spacing: 0.05em;
+  color: var(--accent);
 }
 .stat-l {
-  margin-top: 1vh;
   font-size: calc(var(--fs-body) * 0.92);
   color: var(--muted);
-  line-height: 1.4;
+  line-height: 1.42;
+}
+.stats-4 {
+  grid-template-columns: 1fr 1fr;
 }
 .stats-4 .stat-v {
-  font-size: clamp(1.5rem, min(2.8vw, 5vh), 3.3rem);
+  font-size: clamp(1.4rem, min(2.4vw, 4.2vh), 2.8rem);
 }
 
 .counter {
@@ -562,48 +580,139 @@ button {
 .mega {
   display: flex;
   flex-direction: column;
-  gap: 0.6vh;
+  gap: 0.8vh;
 }
 .mega-v {
   font-family: var(--font-display), sans-serif;
-  font-weight: 800;
-  font-size: clamp(3rem, min(8.6vw, 15vh), 10rem);
+  font-weight: 700;
+  font-size: clamp(3.2rem, min(7.5vw, 13vh), 8.5rem);
   line-height: 0.92;
   letter-spacing: -0.04em;
-  background: linear-gradient(120deg, #fff 10%, var(--accent) 70%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  filter: drop-shadow(0 0 40px color-mix(in oklab, var(--accent) 35%, transparent));
+  color: var(--fg);
 }
 .mega-v small {
-  font-size: 0.3em;
-  font-weight: 500;
-  margin-left: 0.25em;
-  letter-spacing: 0;
+  font-size: 0.28em;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  color: var(--accent);
+  margin-left: 0.3em;
 }
 .mega-l {
   font-size: var(--fs-lead);
   color: var(--muted);
-  max-width: 34ch;
+  max-width: 38ch;
 }
 
-/* ================= Графикууд ================= */
+/* ================= Карт ба Грид ================= */
+
+.grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(12px, 1.2vw, 18px);
+}
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(12px, 1.2vw, 18px);
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8vh;
+  height: 100%;
+}
+.card svg {
+  color: var(--accent);
+  margin-bottom: 0.2vh;
+}
+.card h3 {
+  margin: 0;
+  font-family: var(--font-display), sans-serif;
+  font-weight: 600;
+  font-size: calc(var(--fs-body) * 1.12);
+  letter-spacing: -0.015em;
+  color: var(--fg);
+}
+.card p {
+  margin: 0;
+  font-size: calc(var(--fs-body) * 0.92);
+  color: var(--muted);
+  line-height: 1.48;
+}
+
+/* ================= Харьцуулалт ================= */
+
+.compare {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: clamp(12px, 1.5vw, 24px);
+}
+.cmp {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5vh;
+}
+.cmp > span {
+  font-family: var(--font-mono), monospace;
+  font-size: var(--fs-small);
+  color: var(--faint);
+  letter-spacing: 0.12em;
+}
+.cmp b {
+  font-family: var(--font-display), sans-serif;
+  font-size: clamp(2.2rem, min(4.2vw, 7vh), 4.8rem);
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+.cmp em {
+  font-style: normal;
+  font-size: var(--fs-body);
+  color: var(--muted);
+}
+.cmp-old b {
+  color: var(--faint);
+}
+.cmp-new b {
+  color: var(--fg);
+}
+.cmp-arrow {
+  font-size: clamp(1.4rem, 2.5vw, 2.6rem);
+  color: var(--accent);
+}
+
+.timeline-mini {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(10px, 1.1vw, 16px);
+}
+.tm {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6vh;
+  height: 100%;
+}
+.tm b {
+  font-family: var(--font-display), sans-serif;
+  font-size: clamp(1.2rem, min(1.8vw, 3vh), 1.9rem);
+  color: var(--accent);
+}
+.tm > span {
+  font-size: calc(var(--fs-body) * 0.92);
+  color: var(--muted);
+  line-height: 1.42;
+}
+
+/* ================= График (Financial Times / Swiss Grade) ================= */
 
 .chart-card {
-  position: relative;
-  padding: clamp(14px, min(1.6vw, 2.8vh), 26px);
+  padding: clamp(16px, min(1.8vw, 3vh), 26px);
   border-radius: var(--radius);
-  background: linear-gradient(150deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.015)), var(--glass);
-  border: 1px solid rgba(255, 255, 255, 0.09);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  transition: border-color 0.4s ease, box-shadow 0.5s ease, scale 0.6s var(--ease);
-}
-.chart-card:hover {
-  border-color: color-mix(in oklab, var(--accent) 50%, transparent);
-  box-shadow: 0 40px 90px -45px var(--accent);
-  scale: 1.015;
+  background: var(--glass);
+  border: 1px solid var(--line);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
 }
 .chart-head {
   display: flex;
@@ -612,91 +721,80 @@ button {
   gap: 1em;
   font-size: var(--fs-small);
   font-family: var(--font-mono), monospace;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.08em;
   color: var(--muted);
   text-transform: uppercase;
 }
 .chart-big {
   font-family: var(--font-display), sans-serif;
-  font-size: clamp(1.6rem, min(3vw, 5.4vh), 3.4rem);
+  font-size: clamp(1.6rem, min(2.8vw, 5vh), 3.2rem);
   font-weight: 700;
-  color: var(--accent);
-  letter-spacing: -0.02em;
-  text-transform: none;
+  color: var(--fg);
   line-height: 1;
+  letter-spacing: -0.02em;
 }
 .chart {
   display: block;
   width: 100%;
   height: auto;
-  max-height: 32vh;
-  margin-top: 0.6vh;
+  max-height: 28vh;
+  margin-top: 1vh;
   overflow: visible;
 }
 .chart-grid {
   stroke: rgba(255, 255, 255, 0.07);
-  stroke-dasharray: 3 5;
+  stroke-dasharray: 2 4;
 }
 .chart-line {
   fill: none;
   stroke: var(--accent);
-  stroke-width: 3.5;
+  stroke-width: 2.5;
   stroke-linecap: round;
   stroke-linejoin: round;
   stroke-dasharray: 1;
   stroke-dashoffset: 1;
-  transition: stroke-dashoffset 0.4s ease;
 }
 .is-active .chart-line {
   stroke-dashoffset: 0;
-  transition: stroke-dashoffset 2.4s var(--ease-io) 0.5s;
+  transition: stroke-dashoffset 2s var(--ease-io) 0.3s;
 }
 .chart-area {
   opacity: 0;
-  transition: opacity 0.4s ease;
 }
 .is-active .chart-area {
   opacity: 1;
-  transition: opacity 1.4s ease 1.4s;
+  transition: opacity 1.2s ease 1s;
 }
 .chart-pt {
   opacity: 0;
-  transition: opacity 0.3s ease;
 }
 .chart-pt circle {
   fill: var(--bg);
   stroke: var(--accent);
-  stroke-width: 3;
-  transform-box: fill-box;
-  transform-origin: center;
-  transition: transform 0.35s var(--ease);
-}
-.chart-pt:hover circle {
-  transform: scale(1.7);
-  fill: var(--accent);
+  stroke-width: 2.5;
 }
 .is-active .chart-pt {
   opacity: 1;
-  transition: opacity 0.6s ease calc(var(--i) * 0.32s + 0.7s);
+  transition: opacity 0.5s ease calc(var(--i) * 0.25s + 0.5s);
 }
 .chart-val {
   fill: #fff;
   font-family: var(--font-mono), monospace;
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 600;
 }
 .chart-year {
   fill: var(--faint);
   font-family: var(--font-mono), monospace;
-  font-size: 13px;
+  font-size: 12px;
 }
 
 .bars {
   display: flex;
   align-items: stretch;
-  gap: clamp(10px, 1.4vw, 22px);
-  height: 25vh;
-  margin-top: 1.2vh;
+  gap: clamp(12px, 1.4vw, 24px);
+  height: 23vh;
+  margin-top: 1vh;
 }
 .bar {
   flex: 1;
@@ -709,33 +807,28 @@ button {
   font-family: var(--font-mono), monospace;
   font-size: var(--fs-small);
   font-weight: 600;
-  color: #fff;
+  color: var(--fg);
 }
 .bar-track {
   flex: 1;
   position: relative;
-  border-radius: 12px;
+  border-radius: 6px;
   background: rgba(255, 255, 255, 0.04);
 }
 .bar-fill {
   position: absolute;
   inset: auto 0 0;
   height: max(3px, calc(var(--h) * 100%));
-  border-radius: 12px;
-  background: linear-gradient(to top, color-mix(in oklab, var(--accent) 20%, transparent), var(--accent));
-  box-shadow: 0 0 30px color-mix(in oklab, var(--accent) 50%, transparent);
+  border-radius: 6px;
+  background: var(--accent);
+  opacity: 0.85;
   transform: scaleY(0);
   transform-origin: bottom;
-  transition: transform 0.4s ease, filter 0.3s ease;
+  transition: transform 0.4s ease;
 }
 .is-active .bar-fill {
   transform: scaleY(1);
-  transition:
-    transform 1.6s var(--ease) calc(var(--i) * 0.18s + 0.45s),
-    filter 0.3s ease;
-}
-.bar:hover .bar-fill {
-  filter: brightness(1.35) saturate(1.2);
+  transition: transform 1.2s var(--ease) calc(var(--i) * 0.15s + 0.3s);
 }
 .bar-label {
   font-family: var(--font-mono), monospace;
@@ -743,453 +836,11 @@ button {
   color: var(--faint);
 }
 
-/* ================= 01 Нүүр ================= */
-
-.layout-hero {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  text-align: center;
-  padding-top: 3vh;
-  gap: 2vh;
-}
-.hero-kicker {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.9em;
-  font-family: var(--font-mono), monospace;
-  font-size: var(--fs-small);
-  letter-spacing: 0.3em;
-  text-transform: uppercase;
-  color: var(--muted);
-  padding: 0.7em 1.3em;
-  border-radius: 999px;
-  border: 1px solid var(--line);
-  background: rgba(255, 255, 255, 0.03);
-  backdrop-filter: blur(10px);
-}
-.hero-title {
-  margin: 0;
-  font-family: var(--font-display), sans-serif;
-  font-weight: 800;
-  font-size: clamp(2.6rem, min(10.2vw, 19vh), 12.5rem);
-  line-height: 1;
-  white-space: nowrap;
-  letter-spacing: -0.03em;
-  perspective: 800px;
-  filter: drop-shadow(0 0 40px color-mix(in oklab, var(--accent) 40%, transparent));
-}
-.hero-ch {
-  display: inline-block;
-  background-image: linear-gradient(100deg, #ffffff 0%, #bff6ff 30%, var(--accent) 55%, #8f7bff 80%, #ffffff 100%);
-  background-size: 800% 100%;
-  background-position: calc(var(--k) / 7 * 100%) 0;
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  transform: translateY(40%) rotateX(-95deg);
-  transform-origin: 50% 100%;
-  opacity: 0;
-  transition: transform 0.4s ease, opacity 0.3s ease;
-}
-.is-active .hero-ch {
-  transform: none;
-  opacity: 1;
-  transition:
-    transform 1.4s var(--ease) calc(var(--k) * 70ms + 250ms),
-    opacity 0.9s ease calc(var(--k) * 70ms + 250ms);
-  animation: bob 4.5s ease-in-out infinite;
-  animation-delay: calc(var(--k) * 0.18s);
-}
-.hero-ch:hover {
-  scale: 1.12;
-  transition: scale 0.4s var(--ease);
-}
-@keyframes bob {
-  0%, 100% { translate: 0 0; }
-  50% { translate: 0 -3%; }
-}
-.hero-sub {
-  font-family: var(--font-display), sans-serif;
-  font-weight: 300;
-  font-size: clamp(1.2rem, min(2.8vw, 5vh), 3rem);
-  letter-spacing: 0.02em;
-  color: var(--muted);
-  margin-top: -1vh;
-}
-.hero-sub em {
-  font-style: normal;
-  font-weight: 600;
-  color: var(--fg);
-  background: linear-gradient(90deg, var(--accent), #a78bfa, var(--accent));
-  background-size: 200% 100%;
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  animation: slide-bg 4s linear infinite;
-}
-@keyframes slide-bg {
-  to { background-position: 200% 0; }
-}
-.hero-hint {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.8em;
-  font-family: var(--font-mono), monospace;
-  font-size: var(--fs-small);
-  color: var(--faint);
-  letter-spacing: 0.12em;
-  margin-top: 1vh;
-}
-.mouse {
-  width: 18px;
-  height: 28px;
-  border: 1.5px solid var(--faint);
-  border-radius: 10px;
-  display: inline-flex;
-  justify-content: center;
-  padding-top: 5px;
-}
-.mouse span {
-  width: 2px;
-  height: 6px;
-  border-radius: 2px;
-  background: var(--accent);
-  animation: wheel 1.6s var(--ease) infinite;
-}
-@keyframes wheel {
-  0% { transform: translateY(0); opacity: 1; }
-  100% { transform: translateY(9px); opacity: 0; }
-}
-.marquee {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 6vh;
-  overflow: hidden;
-  pointer-events: none;
-  mask-image: linear-gradient(90deg, transparent, #000 15%, #000 85%, transparent);
-}
-.marquee-track {
-  display: inline-flex;
-  white-space: nowrap;
-  font-family: var(--font-display), sans-serif;
-  font-weight: 700;
-  font-size: clamp(1.4rem, min(3.4vw, 6vh), 3.6rem);
-  color: transparent;
-  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.28);
-  animation: marquee 38s linear infinite;
-}
-@keyframes marquee {
-  to { transform: translateX(-50%); }
-}
-
-/* ================= 02 Агуулга ================= */
-
-.agenda {
-  list-style: none;
-  margin: 0.5vh 0 0;
-  padding: 0;
-}
-.agenda-row {
-  position: relative;
-  width: 100%;
-  display: grid;
-  grid-template-columns: 3.2em 1fr auto 1.4em;
-  align-items: center;
-  gap: 1em;
-  padding: 1.35vh 0.6em;
-  text-align: left;
-  border-bottom: 1px solid var(--line);
-  overflow: hidden;
-  transition: padding 0.5s var(--ease), color 0.3s ease;
-}
-.agenda-row::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  background: linear-gradient(90deg, color-mix(in oklab, var(--accent) 22%, transparent), transparent 80%);
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.6s var(--ease);
-}
-.agenda-row:hover {
-  padding-left: 1.6em;
-}
-.agenda-row:hover::before {
-  transform: scaleX(1);
-}
-.agenda-n {
-  font-family: var(--font-mono), monospace;
-  font-size: var(--fs-small);
-  color: var(--accent);
-}
-.agenda-t {
-  font-family: var(--font-display), sans-serif;
-  font-weight: 500;
-  font-size: clamp(0.95rem, min(1.45vw, 2.6vh), 1.55rem);
-  letter-spacing: -0.01em;
-}
-.agenda-s {
-  font-size: var(--fs-small);
-  color: var(--faint);
-  white-space: nowrap;
-}
-.agenda-arrow {
-  color: var(--accent);
-  opacity: 0;
-  transform: translateX(-12px);
-  transition: all 0.5s var(--ease);
-}
-.agenda-row:hover .agenda-arrow {
-  opacity: 1;
-  transform: none;
-}
-
-/* ================= 03 Тодорхойлолт ================= */
-
-.quote {
-  position: relative;
-  margin: 0;
-  padding: 2.6vh 2vw 2.6vh 2.4vw;
-  font-size: clamp(1.05rem, min(1.6vw, 2.9vh), 1.75rem);
-  line-height: 1.5;
-  font-weight: 400;
-  border-left: 2px solid var(--accent);
-  background: linear-gradient(90deg, color-mix(in oklab, var(--accent) 10%, transparent), transparent);
-  border-radius: 0 var(--radius) var(--radius) 0;
-}
-.quote b {
-  color: var(--accent);
-  font-weight: 600;
-}
-.quote cite {
-  display: block;
-  margin-top: 1.4vh;
-  font-style: normal;
-  font-family: var(--font-mono), monospace;
-  font-size: var(--fs-small);
-  color: var(--faint);
-  letter-spacing: 0.06em;
-}
-.quote-mark {
-  position: absolute;
-  top: 0.05em;
-  right: 0.3em;
-  font-family: var(--font-display), sans-serif;
-  font-size: 3.6em;
-  line-height: 1;
-  color: color-mix(in oklab, var(--accent) 35%, transparent);
-  animation: bob 5s ease-in-out infinite;
-}
-.quote-sm {
-  font-size: clamp(1rem, min(1.4vw, 2.6vh), 1.5rem);
-}
-.chips {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: clamp(8px, 0.9vw, 14px);
-}
-.chip {
-  display: flex;
-  align-items: center;
-  gap: 0.8em;
-  font-size: var(--fs-body);
-  font-weight: 500;
-}
-.chip svg {
-  color: var(--accent);
-  flex: none;
-}
-
-/* ================= 04 Фридман ================= */
-
-.eras {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: clamp(10px, 1.2vw, 20px);
-}
-.era {
-  display: flex;
-  flex-direction: column;
-  gap: 0.8vh;
-  height: 100%;
-}
-.era-v {
-  font-family: var(--font-display), sans-serif;
-  font-weight: 800;
-  font-size: clamp(1.8rem, min(3.6vw, 6.4vh), 4.4rem);
-  line-height: 1;
-  background: linear-gradient(120deg, #fff, var(--accent));
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
-.era-v span {
-  display: block;
-  font-size: 0.26em;
-  font-weight: 500;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  margin-bottom: 0.5em;
-  -webkit-text-fill-color: var(--muted);
-}
-.era-y {
-  font-family: var(--font-mono), monospace;
-  font-size: var(--fs-small);
-  color: var(--accent);
-}
-.era-who {
-  font-family: var(--font-display), sans-serif;
-  font-size: calc(var(--fs-body) * 1.1);
-  font-weight: 500;
-}
-.era-t {
-  margin: 0;
-  font-size: calc(var(--fs-body) * 0.95);
-  color: var(--muted);
-  line-height: 1.45;
-  flex: 1;
-}
-.era-bar {
-  height: 4px;
-  width: var(--w);
-  border-radius: 4px;
-  background: linear-gradient(90deg, var(--accent), transparent);
-  margin-top: 0.6vh;
-}
-
-/* ================= 06 Тулгуур ================= */
-
-.pillars {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: clamp(10px, 1.2vw, 20px);
-  width: min(100%, 1180px);
-  margin-top: 1vh;
-}
-.pillar {
-  text-align: left;
-  display: flex;
-  flex-direction: column;
-  gap: 0.6vh;
-  height: 100%;
-}
-.pillar-ic {
-  width: clamp(40px, min(3.6vw, 6.4vh), 64px);
-  aspect-ratio: 1;
-  display: grid;
-  place-items: center;
-  border-radius: 30%;
-  color: var(--accent);
-  background: color-mix(in oklab, var(--accent) 14%, transparent);
-  border: 1px solid color-mix(in oklab, var(--accent) 40%, transparent);
-  box-shadow: 0 0 30px color-mix(in oklab, var(--accent) 30%, transparent);
-  margin-bottom: 0.8vh;
-  transition: transform 0.7s var(--ease);
-}
-.pillar:hover .pillar-ic {
-  transform: translateZ(50px) rotate(-8deg) scale(1.1) !important;
-}
-.pillar-n {
-  position: absolute !important;
-  top: clamp(14px, min(1.6vw, 2.8vh), 28px);
-  right: clamp(14px, min(1.6vw, 2.8vh), 28px);
-  font-family: var(--font-mono), monospace;
-  font-size: var(--fs-small);
-  color: var(--faint);
-}
-.pillar h3 {
-  margin: 0;
-  font-family: var(--font-display), sans-serif;
-  font-weight: 600;
-  font-size: clamp(1rem, min(1.5vw, 2.7vh), 1.6rem);
-}
-.pillar p {
-  margin: 0;
-  font-size: var(--fs-body);
-  color: var(--muted);
-}
-
-/* ================= Харьцуулалт ================= */
-
-.compare {
-  display: grid;
-  grid-template-columns: 1fr auto 1fr;
-  align-items: center;
-  gap: clamp(10px, 1.2vw, 20px);
-}
-.cmp {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5vh;
-}
-.cmp > span {
-  font-family: var(--font-mono), monospace;
-  font-size: var(--fs-small);
-  color: var(--faint);
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-}
-.cmp b {
-  font-family: var(--font-display), sans-serif;
-  font-size: clamp(2rem, min(4.2vw, 7.4vh), 5rem);
-  line-height: 1.05;
-  letter-spacing: -0.03em;
-}
-.cmp em {
-  font-style: normal;
-  font-size: var(--fs-body);
-  color: var(--muted);
-}
-.cmp-old b {
-  color: rgba(255, 255, 255, 0.55);
-}
-.cmp-new b {
-  background: linear-gradient(120deg, #fff, var(--accent));
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
-.cmp-arrow {
-  font-size: clamp(1.5rem, 3vw, 3rem);
-  color: var(--accent);
-  animation: nudge 1.6s var(--ease-io) infinite;
-}
-@keyframes nudge {
-  50% { translate: 8px 0; }
-}
-
-.timeline-mini {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: clamp(8px, 1vw, 16px);
-}
-.tm {
-  display: flex;
-  flex-direction: column;
-  gap: 0.6vh;
-  height: 100%;
-}
-.tm b {
-  font-family: var(--font-display), sans-serif;
-  font-size: clamp(1.2rem, min(2vw, 3.6vh), 2.2rem);
-  color: var(--accent);
-}
-.tm > span {
-  font-size: calc(var(--fs-body) * 0.95);
-  color: var(--muted);
-  line-height: 1.4;
-}
-
-/* ================= 12 Нийлүүлэлтийн сүлжээ ================= */
+/* ================= 08 Нийлүүлэлтийн сүлжээ ================= */
 
 .supply {
   position: relative;
-  height: min(60vh, 44vw);
+  height: min(58vh, 42vw);
   width: 100%;
 }
 .supply-lines {
@@ -1200,43 +851,24 @@ button {
   overflow: visible;
 }
 .supply-lines line {
-  stroke: var(--accent);
-  stroke-width: 1.5;
+  stroke: var(--line-strong);
+  stroke-width: 1;
   vector-effect: non-scaling-stroke;
-  stroke-dasharray: 2 3;
-  opacity: 0.65;
-  animation: flow 1.6s linear infinite;
-  animation-delay: calc(var(--i) * -0.3s);
-}
-@keyframes flow {
-  to { stroke-dashoffset: -10; }
+  stroke-dasharray: 2 4;
 }
 .supply-core {
   position: absolute;
   left: 50%;
   top: 50%;
-  translate: -50% -50%;
-  width: clamp(80px, min(8vw, 14vh), 150px);
+  transform: translate(-50%, -50%);
+  width: clamp(70px, min(7vw, 12vh), 120px);
   aspect-ratio: 1;
   border-radius: 50%;
   display: grid;
   place-items: center;
   color: #fff;
-  background: radial-gradient(circle, color-mix(in oklab, var(--accent) 45%, transparent), rgba(5, 8, 16, 0.85) 70%);
-  border: 1px solid color-mix(in oklab, var(--accent) 60%, transparent);
-  box-shadow: 0 0 60px color-mix(in oklab, var(--accent) 50%, transparent);
-}
-.supply-core::before,
-.supply-core::after {
-  content: "";
-  position: absolute;
-  inset: -1px;
-  border-radius: 50%;
-  border: 1px solid var(--accent);
-  animation: ping 2.6s var(--ease) infinite;
-}
-.supply-core::after {
-  animation-delay: 1.3s;
+  background: rgba(14, 18, 28, 0.9);
+  border: 1px solid var(--line-strong);
 }
 .supply-node {
   position: absolute;
@@ -1246,49 +878,46 @@ button {
   align-items: center;
   text-align: center;
   gap: 0.3vh;
-  padding: 1.1vh 1.1vw;
-  border-radius: 14px;
-  background: rgba(10, 14, 28, 0.72);
-  border: 1px solid color-mix(in oklab, var(--accent) 35%, transparent);
-  backdrop-filter: blur(10px);
-  max-width: 13vw;
-  animation: float 6s ease-in-out infinite;
-  animation-delay: calc(var(--i) * -1s);
-  transition: scale 0.5s var(--ease), box-shadow 0.4s ease, background 0.4s ease;
+  padding: 1vh 1.1vw;
+  border-radius: 8px;
+  background: rgba(12, 16, 26, 0.85);
+  border: 1px solid var(--line);
+  backdrop-filter: blur(12px);
+  max-width: 14vw;
+  transition: transform 0.3s var(--ease), border-color 0.3s ease;
 }
 .supply-node:hover {
-  scale: 1.15;
-  z-index: 2;
-  background: color-mix(in oklab, var(--accent) 22%, rgba(10, 14, 28, 0.9));
-  box-shadow: 0 0 40px color-mix(in oklab, var(--accent) 50%, transparent);
+  transform: translate(-50%, -50%) scale(1.08);
+  border-color: var(--line-strong);
 }
 .supply-node b {
-  font-family: var(--font-display), sans-serif;
+  font-family: var(--font-body), sans-serif;
   font-weight: 600;
-  font-size: var(--fs-body);
-  color: var(--accent);
+  font-size: calc(var(--fs-body) * 0.95);
+  color: var(--fg);
 }
 .supply-node > span {
-  font-size: var(--fs-small);
+  font-family: var(--font-mono), monospace;
+  font-size: calc(var(--fs-small) * 0.9);
   color: var(--muted);
 }
 
-/* ================= 19 Он дараалал ================= */
+/* ================= 15 Он дараалал ================= */
 
 .timeline {
   position: relative;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: clamp(10px, 1.2vw, 20px);
-  padding-top: 2.4vh;
+  gap: clamp(12px, 1.3vw, 20px);
+  padding-top: 2.2vh;
 }
 .timeline-line {
   position: absolute !important;
   top: 0;
   left: 0;
   right: 0;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  height: 1px;
+  background: var(--line-strong);
 }
 .tl {
   display: flex;
@@ -1298,52 +927,45 @@ button {
 }
 .tl-dot {
   position: absolute !important;
-  top: calc(-2.4vh - 7px);
+  top: -4px;
   left: 50%;
-  width: 12px;
-  height: 12px;
-  margin-left: -6px;
+  width: 8px;
+  height: 8px;
+  margin-left: -4px;
   border-radius: 50%;
   background: var(--accent);
-  box-shadow: 0 0 0 5px color-mix(in oklab, var(--accent) 25%, transparent), 0 0 20px var(--accent);
 }
 .tl b {
-  font-family: var(--font-display), sans-serif;
-  font-size: clamp(1.1rem, min(1.8vw, 3.2vh), 2rem);
+  font-family: var(--font-mono), monospace;
+  font-size: clamp(1rem, min(1.4vw, 2.6vh), 1.6rem);
   color: var(--accent);
 }
 .tl p {
   margin: 0;
-  font-size: var(--fs-body);
+  font-size: calc(var(--fs-body) * 0.92);
   color: var(--muted);
-  line-height: 1.45;
+  line-height: 1.48;
 }
 
-/* ================= 21 Монгол соёл ================= */
+/* ================= 17 Соёл & Өв ================= */
 
 .feature {
   display: flex;
   flex-direction: column;
-  gap: 1vh;
+  gap: 0.8vh;
 }
 .feature-k {
   font-family: var(--font-display), sans-serif;
-  font-weight: 800;
-  font-size: clamp(1.8rem, min(3.4vw, 6vh), 3.8rem);
-  letter-spacing: 0.04em;
-  background: linear-gradient(120deg, #fff, var(--accent));
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+  font-weight: 700;
+  font-size: clamp(1.6rem, min(2.8vw, 5vh), 3.2rem);
+  letter-spacing: -0.02em;
+  color: var(--fg);
 }
 .feature p {
   margin: 0;
   font-size: var(--fs-lead);
   color: var(--muted);
-  line-height: 1.5;
-}
-.feature b {
-  color: var(--accent);
+  line-height: 1.55;
 }
 .sub-k {
   font-family: var(--font-mono), monospace;
@@ -1358,8 +980,8 @@ button {
   gap: clamp(8px, 0.8vw, 12px);
 }
 .her {
-  padding: 1vh 1.1vw !important;
-  border-radius: 999px !important;
+  padding: 0.8vh 1.1vw !important;
+  border-radius: 6px !important;
   font-size: var(--fs-body);
   font-weight: 500;
   display: inline-flex;
@@ -1371,43 +993,29 @@ button {
   font-size: var(--fs-small);
   color: var(--accent);
 }
-.her::before {
-  border-radius: 999px;
+
+/* ================= 18 Энх тайван (Quote) ================= */
+
+.quote {
+  position: relative;
+  margin: 0;
+  padding: 2.2vh 1.8vw;
+  font-size: clamp(1.05rem, min(1.5vw, 2.7vh), 1.6rem);
+  line-height: 1.55;
+  font-weight: 400;
+  border-left: 2px solid var(--accent);
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 0 8px 8px 0;
+  color: var(--fg);
+}
+.quote-mark {
+  display: none;
+}
+.quote-sm {
+  font-size: clamp(0.98rem, min(1.35vw, 2.4vh), 1.4rem);
 }
 
-/* ================= 23 Хүний хөгжил ================= */
-
-.tiers {
-  display: flex;
-  flex-direction: column;
-  gap: clamp(8px, 1vw, 14px);
-}
-.tier {
-  display: flex;
-  flex-direction: column;
-  gap: 0.4vh;
-}
-.tier b {
-  font-family: var(--font-display), sans-serif;
-  font-weight: 500;
-  font-size: var(--fs-body);
-}
-.tier > span {
-  font-size: var(--fs-small);
-  color: var(--accent);
-}
-.tier-bar {
-  position: absolute !important;
-  left: 0;
-  bottom: 0;
-  height: 3px;
-  width: var(--w);
-  border-radius: 3px;
-  background: linear-gradient(90deg, var(--accent), transparent);
-  transform: none !important;
-}
-
-/* ================= 25 Дүгнэлт ================= */
+/* ================= 21 Дүгнэлт ================= */
 
 .layout-final {
   width: 100%;
@@ -1416,38 +1024,36 @@ button {
   align-items: center;
   justify-content: center;
   text-align: center;
-  gap: 3vh;
+  gap: 2.6vh;
 }
 .final-title {
   margin: 0;
   font-family: var(--font-display), sans-serif;
-  font-weight: 800;
-  font-size: clamp(2.2rem, min(6.6vw, 11.5vh), 8rem);
-  line-height: 1.04;
+  font-weight: 700;
+  font-size: clamp(2rem, min(5vw, 9vh), 5.5rem);
+  line-height: 1.08;
   letter-spacing: -0.035em;
   text-wrap: balance;
-  filter: drop-shadow(0 0 40px color-mix(in oklab, var(--accent) 35%, transparent));
+  color: var(--fg);
+  max-width: 24ch;
 }
 .final-row {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: clamp(8px, 1vw, 16px);
+  gap: clamp(8px, 1vw, 14px);
 }
 .final-chip {
   display: inline-flex !important;
   align-items: center;
-  gap: 0.7em;
-  border-radius: 999px !important;
-  padding: 1.3vh 1.5vw !important;
+  gap: 0.6em;
+  border-radius: 6px !important;
+  padding: 0.9vh 1.4vw !important;
   font-size: var(--fs-body);
   font-weight: 500;
 }
 .final-chip svg {
   color: var(--accent);
-}
-.final-chip::before {
-  border-radius: 999px;
 }
 .final-key {
   font-size: var(--fs-lead);
@@ -1457,28 +1063,23 @@ button {
   color: var(--fg);
 }
 .thanks {
-  margin-top: 2vh;
+  margin-top: 1.5vh;
   font-family: var(--font-display), sans-serif;
   font-weight: 600;
-  font-size: clamp(1.1rem, min(2.2vw, 4vh), 2.4rem);
-  letter-spacing: 0.06em;
+  font-size: clamp(1rem, min(1.8vw, 3.2vh), 1.9rem);
+  letter-spacing: 0.1em;
   text-transform: uppercase;
-  background: linear-gradient(90deg, #fff, var(--accent), #a78bfa, #fff);
-  background-size: 300% 100%;
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  animation: slide-bg 5s linear infinite;
+  color: var(--fg);
 }
 
-/* ================= HUD ================= */
+/* ================= HUD (Swiss Telemetry) ================= */
 
 .hud-progress {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
-  height: 3px;
+  height: 2px;
   z-index: 20;
   background: rgba(255, 255, 255, 0.05);
 }
@@ -1486,14 +1087,13 @@ button {
   height: 100%;
   transform-origin: left;
   transform: scaleX(0);
-  background: linear-gradient(90deg, #7c5cff, var(--accent));
-  box-shadow: 0 0 16px var(--accent);
+  background: var(--accent);
 }
 
 .hud-count {
   position: fixed;
   left: var(--pad-x);
-  bottom: 3.4vh;
+  bottom: 3.2vh;
   z-index: 20;
   display: flex;
   align-items: baseline;
@@ -1504,115 +1104,106 @@ button {
   pointer-events: none;
 }
 .hud-count-cur {
-  display: inline-block;
-  font-family: var(--font-display), sans-serif;
-  font-weight: 700;
-  font-size: 1.9em;
+  font-family: var(--font-mono), monospace;
+  font-weight: 600;
+  font-size: 1.4em;
   color: var(--fg);
-  animation: count-in 0.7s var(--ease);
-}
-@keyframes count-in {
-  from { transform: translateY(70%); opacity: 0; filter: blur(4px); }
 }
 .hud-count-sep {
-  color: var(--accent);
+  color: var(--faint);
 }
 .hud-count-nav {
-  margin-left: 1.2em;
-  padding-left: 1.2em;
+  margin-left: 1em;
+  padding-left: 1em;
   border-left: 1px solid var(--line);
   letter-spacing: 0.14em;
   text-transform: uppercase;
+  color: var(--muted);
 }
 
 .hud-dots {
   position: fixed;
-  right: 1.8vw;
+  right: 2vw;
   top: 50%;
-  translate: 0 -50%;
+  transform: translateY(-50%);
   z-index: 20;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  gap: 2px;
+  gap: 4px;
 }
 .hud-dot {
   position: relative;
-  width: 22px;
-  height: min(14px, 2.6vh);
+  width: 20px;
+  height: min(12px, 2.2vh);
   display: grid;
   place-items: center end;
 }
 .hud-dot::before {
   content: "";
   width: 6px;
-  height: 2px;
-  border-radius: 2px;
-  background: rgba(255, 255, 255, 0.3);
-  transition: width 0.5s var(--ease), background 0.3s ease, box-shadow 0.3s ease;
+  height: 1.5px;
+  background: rgba(255, 255, 255, 0.2);
+  transition: width 0.3s var(--ease), background 0.2s ease;
 }
 .hud-dot:hover::before {
-  width: 16px;
+  width: 14px;
   background: #fff;
 }
 .hud-dot.is-on::before {
-  width: 22px;
+  width: 20px;
   background: var(--accent);
-  box-shadow: 0 0 10px var(--accent);
 }
 .hud-dot-label {
   position: absolute;
-  right: 32px;
+  right: 28px;
   top: 50%;
-  translate: 10px -50%;
+  transform: translateY(-50%);
   white-space: nowrap;
   font-family: var(--font-mono), monospace;
   font-size: 11px;
-  letter-spacing: 0.06em;
-  padding: 5px 10px;
-  border-radius: 8px;
-  background: rgba(8, 12, 24, 0.85);
+  letter-spacing: 0.08em;
+  padding: 4px 8px;
+  border-radius: 4px;
+  background: rgba(10, 14, 22, 0.9);
   border: 1px solid var(--line);
   backdrop-filter: blur(8px);
   opacity: 0;
   pointer-events: none;
-  transition: opacity 0.3s ease, translate 0.5s var(--ease);
+  transition: opacity 0.2s ease;
 }
 .hud-dot:hover .hud-dot-label {
   opacity: 1;
-  translate: 0 -50%;
 }
 
 .hud-tools {
   position: fixed;
   right: var(--pad-x);
-  bottom: 3vh;
+  bottom: 2.8vh;
   z-index: 20;
   display: flex;
-  gap: 8px;
+  gap: 6px;
 }
 .hud-btn {
-  height: 38px;
-  min-width: 38px;
-  padding: 0 12px;
-  border-radius: 999px;
+  height: 34px;
+  min-width: 34px;
+  padding: 0 10px;
+  border-radius: 6px;
   border: 1px solid var(--line);
-  background: rgba(255, 255, 255, 0.04);
+  background: rgba(255, 255, 255, 0.03);
   backdrop-filter: blur(10px);
   font-family: var(--font-mono), monospace;
-  font-size: 13px;
+  font-size: 12px;
   color: var(--muted);
-  transition: all 0.4s var(--ease);
+  transition: all 0.25s var(--ease);
 }
 .hud-btn:hover:not(:disabled) {
-  color: #050810;
-  background: var(--accent);
-  border-color: var(--accent);
-  scale: 1.12;
-  box-shadow: 0 0 24px var(--accent);
+  color: #fff;
+  border-color: var(--line-strong);
+  background: rgba(255, 255, 255, 0.08);
 }
 .hud-btn:disabled {
-  opacity: 0.3;
+  opacity: 0.25;
   cursor: default;
 }
 
@@ -1628,28 +1219,26 @@ button {
   border-radius: 50%;
 }
 .cursor-dot {
-  width: 6px;
-  height: 6px;
-  margin: -3px 0 0 -3px;
+  width: 4px;
+  height: 4px;
+  margin: -2px 0 0 -2px;
   background: #fff;
-  mix-blend-mode: difference;
 }
 .cursor-ring {
-  width: 38px;
-  height: 38px;
-  margin: -19px 0 0 -19px;
+  width: 32px;
+  height: 32px;
+  margin: -16px 0 0 -16px;
 }
 .cursor-ring::before {
   content: "";
   position: absolute;
   inset: 0;
   border-radius: 50%;
-  border: 1px solid color-mix(in oklab, var(--accent) 70%, transparent);
-  transition: transform 0.5s var(--ease), background 0.4s ease, border-color 0.4s ease;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  transition: transform 0.35s var(--ease), border-color 0.25s ease;
 }
 .cursor-ring.is-hover::before {
-  transform: scale(1.8);
-  background: color-mix(in oklab, var(--accent) 14%, transparent);
+  transform: scale(1.4);
   border-color: var(--accent);
 }
 @media (hover: hover) and (pointer: fine) {
@@ -1676,33 +1265,29 @@ button {
   place-items: center;
   background: var(--bg);
   pointer-events: none;
-  animation: curtain 1.5s var(--ease-io) 0.9s forwards;
+  animation: curtain 1.2s var(--ease-io) 0.6s forwards;
 }
 .curtain span {
   font-family: var(--font-display), sans-serif;
-  font-weight: 700;
-  font-size: clamp(1rem, 2vw, 1.6rem);
-  letter-spacing: 0.6em;
+  font-weight: 600;
+  font-size: clamp(1.1rem, 2vw, 1.8rem);
+  letter-spacing: 0.5em;
   color: var(--fg);
-  animation: curtain-text 1.4s var(--ease) both;
-}
-@keyframes curtain-text {
-  from { letter-spacing: 1.4em; opacity: 0; filter: blur(8px); }
 }
 @keyframes curtain {
   to { clip-path: inset(0 0 100% 0); visibility: hidden; }
 }
 
-/* ================= Жижиг дэлгэц ================= */
+/* ================= Мобайл дэлгэц ================= */
 
 @media (max-width: 900px), (max-aspect-ratio: 1/1) {
   :root {
-    --pad-y: 9vh;
-    --pad-x: 6vw;
-    --fs-h2: clamp(1.4rem, 6.4vw, 2.4rem);
-    --fs-lead: clamp(0.9rem, 3.8vw, 1.1rem);
-    --fs-body: clamp(0.8rem, 3.4vw, 1rem);
-    --fs-small: clamp(0.65rem, 2.8vw, 0.8rem);
+    --pad-y: 8vh;
+    --pad-x: 5vw;
+    --fs-h2: clamp(1.4rem, 6vw, 2.2rem);
+    --fs-lead: clamp(0.9rem, 3.6vw, 1.1rem);
+    --fs-body: clamp(0.8rem, 3.2vw, 0.95rem);
+    --fs-small: clamp(0.65rem, 2.6vw, 0.8rem);
   }
   .layout-left,
   .layout-right {
@@ -1714,23 +1299,20 @@ button {
     gap: 2vh;
     align-content: center;
   }
+  .grid-2,
   .grid-3,
-  .eras,
   .pillars,
   .timeline,
   .timeline-mini {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
   }
   .supply {
-    height: 34vh;
+    height: 32vh;
   }
   .supply-node {
-    max-width: 30vw;
+    max-width: 28vw;
   }
   .hud-dots,
-  .agenda-s {
-    display: none;
-  }
   .hud-count-nav {
     display: none;
   }
@@ -1742,5 +1324,6 @@ button {
   *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
 }

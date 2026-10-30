@@ -25,12 +25,12 @@ export function useIsActive() {
 
 type Vars = CSSProperties & Record<`--${string}`, string | number>;
 
-// ---------- Үгээр нь задлан гаргах гарчиг ----------
+// ---------- Швейцарь хэв маягийн үгээр задлан гаргах гарчиг ----------
 
 export function Split({
   text,
   delay = 0,
-  step = 55,
+  step = 45,
   className,
 }: {
   text: string;
@@ -77,12 +77,12 @@ export function Reveal({
   );
 }
 
-// ---------- 3D хазайдаг карт (hover) ----------
+// ---------- Тактиль мэдрэмжтэй, архитектур загварын карт ----------
 
 export function Tilt({
   children,
   className,
-  max = 12,
+  max = 5,
   i = 0,
   accent,
 }: {
@@ -102,9 +102,10 @@ export function Tilt({
     const py = (e.clientY - r.top) / r.height;
     el.style.setProperty("--rx", `${(0.5 - py) * max}deg`);
     el.style.setProperty("--ry", `${(px - 0.5) * max}deg`);
-    el.style.setProperty("--mx", `${px * 100}%`);
-    el.style.setProperty("--my", `${py * 100}%`);
+    el.style.setProperty("--mx", `${(px * 100).toFixed(1)}%`);
+    el.style.setProperty("--my", `${(py * 100).toFixed(1)}%`);
   };
+
   const leave = () => {
     const el = ref.current;
     if (!el) return;
@@ -129,7 +130,7 @@ export function Tilt({
   );
 }
 
-// ---------- Тоолуур ----------
+// ---------- Нарийвчлалтай тоолуур ----------
 
 export function Counter({
   to,
@@ -138,7 +139,7 @@ export function Counter({
   duration = 1800,
   prefix = "",
   suffix = "",
-  delay = 250,
+  delay = 200,
   grouping = true,
 }: {
   to: number;
@@ -160,6 +161,7 @@ export function Counter({
     const tick = (now: number) => {
       if (!start) start = now + delay;
       const k = Math.min(Math.max((now - start) / duration, 0), 1);
+      // Зөөлөн quintic easing
       const e = 1 - Math.pow(1 - k, 4);
       setValue(from + (to - from) * e);
       if (k < 1) raf = requestAnimationFrame(tick);
@@ -176,6 +178,7 @@ export function Counter({
     maximumFractionDigits: decimals,
     useGrouping: grouping,
   });
+
   return (
     <span className="counter">
       {prefix}
@@ -185,7 +188,7 @@ export function Counter({
   );
 }
 
-// ---------- Жижиг дүрс тэмдэгүүд ----------
+// ---------- Тодорхой, цэвэр шугаман дүрсүүд ----------
 
 const ICONS: Record<string, ReactNode> = {
   trend: (
@@ -311,7 +314,7 @@ const ICONS: Record<string, ReactNode> = {
   ),
 };
 
-export function Icon({ name, size = 24 }: { name: keyof typeof ICONS | string; size?: number }) {
+export function Icon({ name, size = 20 }: { name: keyof typeof ICONS | string; size?: number }) {
   return (
     <svg
       width={size}
@@ -319,12 +322,12 @@ export function Icon({ name, size = 24 }: { name: keyof typeof ICONS | string; s
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
-      strokeWidth={1.6}
+      strokeWidth={1.5}
       strokeLinecap="round"
       strokeLinejoin="round"
       aria-hidden
     >
-      {ICONS[name]}
+      {ICONS[name] ?? ICONS.sparkle}
     </svg>
   );
 }

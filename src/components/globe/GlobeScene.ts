@@ -98,13 +98,13 @@ export class GlobeScene {
 
   constructor(private canvas: HTMLCanvasElement, private poses: Pose[]) {
     this.renderer = new THREE.WebGLRenderer({ canvas, antialias: true, powerPreference: "high-performance" });
-    this.renderer.setClearColor(0x02040a, 1);
+    this.renderer.setClearColor(0x07090e, 1);
     this.camera = new THREE.PerspectiveCamera(40, 1, 0.1, 200);
     this.camera.position.set(0, 0, 6);
 
     this.composer = new EffectComposer(this.renderer);
     this.composer.addPass(new RenderPass(this.scene, this.camera));
-    this.bloom = new UnrealBloomPass(new THREE.Vector2(1, 1), 0.6, 0.5, 0.2);
+    this.bloom = new UnrealBloomPass(new THREE.Vector2(1, 1), 0.35, 0.45, 0.35);
     this.composer.addPass(this.bloom);
     this.composer.addPass(new OutputPass());
 
