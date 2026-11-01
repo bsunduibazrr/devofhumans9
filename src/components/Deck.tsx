@@ -1,6 +1,12 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState, type CSSProperties } from "react";
+import {
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+  type CSSProperties,
+} from "react";
 import Lenis from "lenis";
 import GlobeCanvas from "./globe/GlobeCanvas";
 import { GoToContext, SLIDES } from "./slides";
@@ -11,7 +17,8 @@ const POSES = SLIDES.map((s) => s.pose);
 const N = SLIDES.length;
 
 const clamp = (v: number, a = 0, b = 1) => Math.min(Math.max(v, a), b);
-const easeInOut = (t: number) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
+const easeInOut = (t: number) =>
+  t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
 
 export default function Deck() {
   const [active, setActive] = useState(0);
@@ -39,12 +46,20 @@ export default function Deck() {
   }, []);
 
   useEffect(() => {
-    const lenis = new Lenis({ lerp: 0.085, wheelMultiplier: 0.9, touchMultiplier: 1.6 });
+    const lenis = new Lenis({
+      lerp: 0.085,
+      wheelMultiplier: 0.9,
+      touchMultiplier: 1.6,
+    });
     lenisRef.current = lenis;
 
     // Хаягийн #-аас эхлэх слайдыг сэргээх
     const fromHash = parseInt(window.location.hash.replace("#", ""), 10);
-    if (fromHash >= 1 && fromHash <= N) lenis.scrollTo((fromHash - 1) * window.innerHeight, { immediate: true, force: true });
+    if (fromHash >= 1 && fromHash <= N)
+      lenis.scrollTo((fromHash - 1) * window.innerHeight, {
+        immediate: true,
+        force: true,
+      });
 
     let raf = 0;
     let lastActive = -1;
@@ -71,7 +86,12 @@ export default function Deck() {
           vis[i] = show;
         }
         if (!show) continue;
-        let y: number, z: number, rx: number, op: number, blur: number, sc: number;
+        let y: number,
+          z: number,
+          rx: number,
+          op: number,
+          blur: number,
+          sc: number;
         if (t >= 0) {
           // Гарч буй слайд — камерын хажуугаар нисэн өнгөрнө
           y = -t * 12;
@@ -98,20 +118,28 @@ export default function Deck() {
 
       const a = clamp(Math.round(p), 0, N - 1);
       if (a !== lastActive) {
-        slideRefs.current.forEach((el, i) => el?.classList.toggle("is-active", i === a));
+        slideRefs.current.forEach((el, i) =>
+          el?.classList.toggle("is-active", i === a),
+        );
         lastActive = a;
         setActive(a);
-        document.documentElement.style.setProperty("--accent", SLIDES[a].pose.color);
+        document.documentElement.style.setProperty(
+          "--accent",
+          SLIDES[a].pose.color,
+        );
         history.replaceState(null, "", `#${a + 1}`);
       }
 
-      if (barRef.current) barRef.current.style.transform = `scaleX(${clamp(p / (N - 1))})`;
+      if (barRef.current)
+        barRef.current.style.transform = `scaleX(${clamp(p / (N - 1))})`;
 
       // Курсор
       mouse.rx += (mouse.cx - mouse.rx) * 0.16;
       mouse.ry += (mouse.cy - mouse.ry) * 0.16;
-      if (dotRef.current) dotRef.current.style.transform = `translate3d(${mouse.cx}px, ${mouse.cy}px, 0)`;
-      if (ringRef.current) ringRef.current.style.transform = `translate3d(${mouse.rx}px, ${mouse.ry}px, 0)`;
+      if (dotRef.current)
+        dotRef.current.style.transform = `translate3d(${mouse.cx}px, ${mouse.cy}px, 0)`;
+      if (ringRef.current)
+        ringRef.current.style.transform = `translate3d(${mouse.rx}px, ${mouse.ry}px, 0)`;
 
       raf = requestAnimationFrame(frame);
     };
@@ -126,7 +154,14 @@ export default function Deck() {
       const base = Math.floor(p);
       const frac = p - base;
       if (frac < 0.001 || frac > 0.999) return;
-      const target = lenis.direction >= 0 ? (frac > 0.1 ? base + 1 : base) : frac < 0.9 ? base : base + 1;
+      const target =
+        lenis.direction >= 0
+          ? frac > 0.1
+            ? base + 1
+            : base
+          : frac < 0.9
+            ? base
+            : base + 1;
       goTo(target);
     };
     lenis.on("scroll", () => {
@@ -175,14 +210,19 @@ export default function Deck() {
       mouse.cy = e.clientY;
     };
     const onOver = (e: PointerEvent) => {
-      const hit = (e.target as HTMLElement).closest?.("[data-cursor], button, a");
+      const hit = (e.target as HTMLElement).closest?.(
+        "[data-cursor], button, a",
+      );
       ringRef.current?.classList.toggle("is-hover", !!hit);
     };
     window.addEventListener("pointermove", onMove);
     window.addEventListener("pointerover", onOver);
 
     const onResize = () => {
-      lenis.scrollTo(Math.round(deck.progress) * window.innerHeight, { immediate: true, force: true });
+      lenis.scrollTo(Math.round(deck.progress) * window.innerHeight, {
+        immediate: true,
+        force: true,
+      });
     };
     window.addEventListener("resize", onResize);
 
@@ -200,10 +240,6 @@ export default function Deck() {
     };
   }, [goTo]);
 
-  const toggleFullscreen = () => {
-    if (document.fullscreenElement) document.exitFullscreen();
-    else document.documentElement.requestFullscreen?.();
-  };
 
   return (
     <ActiveContext.Provider value={active}>
@@ -260,17 +296,6 @@ export default function Deck() {
             </button>
           ))}
         </nav>
-        <div className="hud-tools">
-          <button className="hud-btn" onClick={() => goTo(active - 1)} aria-label="Өмнөх слайд" disabled={active === 0}>
-            ↑
-          </button>
-          <button className="hud-btn" onClick={() => goTo(active + 1)} aria-label="Дараагийн слайд" disabled={active === N - 1}>
-            ↓
-          </button>
-          <button className="hud-btn hud-btn-wide" onClick={toggleFullscreen} aria-label="Бүтэн дэлгэц (F)">
-            ⤢ F
-          </button>
-        </div>
 
         <div ref={dotRef} className="cursor-dot" aria-hidden />
         <div ref={ringRef} className="cursor-ring" aria-hidden />
